@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React from "react";
 
 const Home = () =>{
@@ -10,3 +11,5 @@ const Home = () =>{
         </div>
     )
 }
+=======
+>>>>>>> Stashed changes
