@@ -4,7 +4,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './styles/App.css'
 import { Button } from './components/ui/button'
-import FornecedorRoutes from './routes/FornecedorRoutes';
+import FornecedorRoutes from './router/supplierRouter';
 
 function App() {
   const [count, setCount] = useState(0)
