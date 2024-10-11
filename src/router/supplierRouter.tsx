@@ -1,7 +1,7 @@
-import ListarFornecedores from '../pages/fornecedoresPages/listarFornecedores/ListarFornecedores';
+import ListarFornecedores from '../pages/supplier/supplierList/SupplierList';
 import { Route, Routes } from 'react-router-dom';
 
-function FornecedorRoutes() {
+function SupplierRoutes() {
     return (
         <>  
             <Routes>
@@ -12,4 +12,4 @@ function FornecedorRoutes() {
     )
 }
 
-export default FornecedorRoutes;
+export default SupplierRoutes;

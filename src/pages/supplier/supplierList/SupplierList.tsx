@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ListarFornecedores() {
+function SupplierList() {
     return (
         <>
         <h1>FORNECEDORES</h1>
@@ -8,4 +8,4 @@ function ListarFornecedores() {
     )
 }
 
-export default ListarFornecedores;
+export default SupplierList;
