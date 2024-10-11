@@ -1,57 +1,53 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+import { useNavigate } from 'react-router-dom';
 
-import { cn } from "@/lib/utils"
-
-const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
-  {
-    variants: {
-      variant: {
-        default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-10 rounded-md px-8",
-        icon: "h-9 w-9",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
-
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean
+interface IButtonProps {
+  text?: string;
+  nivel: number;
+  link?: string;
+  onClick?: () => void;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    )
-  }
-)
-Button.displayName = "Button"
+/**
+ * TUTORIAL PRO VINÃO
+ * 
+ * componente botao, que pode ser primario, secundario ou terciario e pode ter um link pra redirecionar
+ *
+ * <Button text="exemplo text" nivel={1} link={"/home"} onClick={minhaFuncaoTalTal}/>
+ * @param {string} text - (OPCIONAL) texto do botao
+ * @param {number} nivel - (OBRIGATORIO) define se o botão é primario(1), secundario(2), ou terciario(3) - deve usar apenas numeros
+ * @param {string} [link] - (OPCIONAL) rota pra mandar pra outra pagina EX: /fornecedores
+ * @param {onClick} onClick - (OPCIONAL) parametro pra executar alguma funcao, crie uma func. de seta e passe-a aqui :)
+ * @returns {JSX.Element} 
+ */
+function Button({ text, nivel, link, onClick }: IButtonProps): JSX.Element {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
 
-export { Button, buttonVariants }
+    if (link) {
+      navigate(link);
+    }
+  }
+  const getButtonClass = () => {
+    switch (nivel) {
+      case 1:
+        return "btn-primary";
+      case 2:
+        return "btn-secondary";
+      case 3:
+        return "btn-tertiary";
+      default:
+        return "btn-primary"; // Caso `variant` seja inválido, usa a classe padrão
+    }
+  };
+
+  return (
+    <button id='botao-personalizado' onClick={handleClick} className={getButtonClass()}>
+      {text}
+    </button>
+  );
+}
+
+export default Button;
