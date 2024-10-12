@@ -1,3 +1,8 @@
+/*
+vinão esse é o css principal, é o basico pra todas as paginas;
+- cada pagina tambem tem o seu css especifico, o arquivo esta na pasta styles com o nome da pagina, por exemplo: style_login e tals
+*/
+
 * {
   margin: 0;
   padding: 0;

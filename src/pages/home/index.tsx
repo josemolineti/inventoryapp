@@ -16,7 +16,8 @@ function Home() {
             <p>teste dos botões, pode apagar isso vinao kkk</p>
             <Button nivel={1} text="Ir para pagina fornecedores" link="/fornecedores"/>
             <Button nivel={2} text="Falar algo" onClick={falarAlgo}/>
-            <Button nivel={3} text="Botão 3" onClick={nada}/>
+            <Button nivel={3} text="Sair" onClick={nada} link="/login"/>
+            
         </>
     )
 }
