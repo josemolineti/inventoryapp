@@ -39,7 +39,7 @@ function Button({ text, nivel, link, onClick }: IButtonProps): JSX.Element {
       case 3:
         return "btn-tertiary";
       default:
-        return "btn-primary"; // Caso `variant` seja inválido, usa a classe padrão
+        return "btn-primary";
     }
   };
 

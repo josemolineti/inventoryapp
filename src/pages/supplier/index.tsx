@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.css";
+import '@/styles/index.css'
 const Supplier = () =>{
 
 
