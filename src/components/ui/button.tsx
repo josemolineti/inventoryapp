@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface IButtonProps {
   text?: string;
-  nivel: number;
+  color: number;
   link?: string;
   onClick?: () => void;
 }
@@ -14,12 +14,12 @@ interface IButtonProps {
  *
  * <Button text="exemplo text" nivel={1} link={"/home"} onClick={minhaFuncaoTalTal}/>
  * @param {string} text - (OPCIONAL) texto do botao
- * @param {number} nivel - (OBRIGATORIO) define se o botão é primario(1), secundario(2), ou terciario(3) - deve usar apenas numeros
+ * @param {number} color - (OBRIGATORIO) define se o botão é primario(1), secundario(2), ou terciario(3) - deve usar apenas numeros
  * @param {string} [link] - (OPCIONAL) rota pra mandar pra outra pagina EX: /fornecedores
  * @param {onClick} onClick - (OPCIONAL) parametro pra executar alguma funcao, crie uma func. de seta e passe-a aqui :)
  * @returns {JSX.Element} 
  */
-function Button({ text, nivel, link, onClick }: IButtonProps): JSX.Element {
+function Button({ text, color, link, onClick }: IButtonProps): JSX.Element {
   const navigate = useNavigate();
   const handleClick = () => {
     if (onClick) {
@@ -31,7 +31,7 @@ function Button({ text, nivel, link, onClick }: IButtonProps): JSX.Element {
     }
   }
   const getButtonClass = () => {
-    switch (nivel) {
+    switch (color) {
       case 1:
         return "btn-primary";
       case 2:

@@ -6,7 +6,7 @@ function SupplierList() {
     return (
         <>
         <h1>FORNECEDORES</h1>
-        <Button nivel={2} text='Voltar Home' link='/home'/>
+        <Button color={2} text='Voltar Home' link='/home'/>
         </>
     )
 }

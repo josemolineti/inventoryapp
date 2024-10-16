@@ -3,22 +3,56 @@ vinão esse é o css principal, é o basico pra todas as paginas;
 - cada pagina tambem tem o seu css especifico, o arquivo esta na pasta styles com o nome da pagina, por exemplo: style_login e tals
 */
 
+@import url('style_responsivo.css');
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
+  font-family: "Inria Sans", sans-serif;
 }
-:root {
 
+:root {
+  --primary-color: #16325B;
+  --secondary-color: #FFC21F;
+  --tertiary-color: #227B94;
 }
+
+/*
+COMPONENT LOGO --
+*/
+
+#box-logo {
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+#box-logo span {
+  color: var(--secondary-color);
+  margin-top: 30px;
+  font-weight: bold;
+  font-size: 20pt;
+}
+
+/*
+COMPONENT BUTTON --
+*/
 
 #botao-personalizado {
-
-  margin: 1vw;
-  padding: 1vw;
+  position: relative;
+  border: none;
+  border-radius: 0.5vw;
+  width: 2vw;
+  height: 2vw;
 }
+
 .btn-primary {
-  background-color: blue;
+  background-color: var(--secondary-color);
   color: white;
+  
 }
 
 .btn-secondary {
@@ -29,4 +63,37 @@ vinão esse é o css principal, é o basico pra todas as paginas;
 .btn-tertiary {
   background-color: rgb(120, 120, 13);
   color: white;
-} 
+}
+
+
+
+/*
+COMPONENT INPUT --
+*/
+#component-model-input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 2vw;
+  width: 50%;
+
+}
+
+#component-model-input input {
+  border: 2px solid #16325B;
+  background-color: rgba(34, 123, 148, 0.2);
+  border-radius: 10px;
+  padding: 10px 20px;
+  outline: none;
+  font-size: 14pt;
+  font-weight: bold;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease;
+  width: 100%;
+}
+
+#component-model-input label {
+  color: var(--primary-color);
+  font-size: 20px;
+}

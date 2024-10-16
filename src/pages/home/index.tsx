@@ -1,8 +1,17 @@
+import { useEffect } from 'react';
 import Button from "@/components/ui/button";
-import '@/styles/index.css'
+import '@/styles/home_style.css'
 
 
 function Home() {
+    useEffect(() => {
+        document.body.classList.add('home-page');
+        
+        return () => {
+            document.body.classList.remove('home-page');
+        };
+    }, []);
+
     const falarAlgo = () => {
         alert("algo");
     }
@@ -14,10 +23,10 @@ function Home() {
         <>
             <h1>HOME</h1>
             <p>teste dos botões, pode apagar isso vinao kkk</p>
-            <Button nivel={1} text="Ir para pagina fornecedores" link="/fornecedores"/>
-            <Button nivel={2} text="Falar algo" onClick={falarAlgo}/>
-            <Button nivel={3} text="Sair" onClick={nada} link="/login"/>
-            
+            <Button color={1} text="Ir para pagina fornecedores" link="/fornecedores" />
+            <Button color={2} text="Falar algo" onClick={falarAlgo} />
+            <Button color={3} text="Sair" onClick={nada} link="/login" />
+
         </>
     )
 }
