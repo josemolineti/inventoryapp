@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import Button from "@/components/ui/button";
 import '@/styles/home_style.css'
-
+import "@/styles/utility.css";
+import { Route, useRoutes } from 'react-router-dom';
+import TopBar from '@/components/ui/top-bar';
 
 function Home() {
     useEffect(() => {
@@ -12,20 +14,17 @@ function Home() {
         };
     }, []);
 
-    const falarAlgo = () => {
-        alert("algo");
-    }
 
-    const nada = () => {
-        alert("n faço nada otario kkk")
-    }
     return (
         <>
-            <h1>HOME</h1>
-            <p>teste dos botões, pode apagar isso vinao kkk</p>
-            <Button color={1} text="Ir para pagina fornecedores" link="/fornecedores" />
-            <Button color={2} text="Falar algo" onClick={falarAlgo} />
-            <Button color={3} text="Sair" onClick={nada} link="/login" />
+    <header>
+        <TopBar/>
+    </header>
+
+
+
+
+
 
         </>
     )

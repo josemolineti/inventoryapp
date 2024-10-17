@@ -21,7 +21,7 @@ function Login() {
                     <img src="src\assets\profile-icon.svg" alt="" />
                 </div>
                 <div id='box-content'>
-                    <Logo onlyLogo={false} clickable={true} />
+                    <Logo onlyLogo={false} clickable={false} />
                     <form action="">
                         <h1 id="login-title">LOGIN</h1>
                         <Input type='text' placeholder='Digite seu Nome' label='Nome' required />
