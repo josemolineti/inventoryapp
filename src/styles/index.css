@@ -13,9 +13,10 @@ vinão esse é o css principal, é o basico pra todas as paginas;
 }
 
 :root {
-  --primary-color: #16325B;
-  --secondary-color: #FFC21F;
-  --tertiary-color: #227B94;
+--primary-color: #16325B;
+--secondary-color: #78B7D0;
+--tertiary-color: #227B94;
+--quaternary-color: #FFC21F;
 }
 
 /*
@@ -43,16 +44,31 @@ COMPONENT BUTTON --
 
 #botao-personalizado {
   position: relative;
-  border: none;
-  border-radius: 0.5vw;
   width: 2vw;
   height: 2vw;
 }
 
+.btn-menu {
+  background-color: var(--primary-color);
+  color: var(--quaternary-color);
+  border: solid var(--quaternary-color) 2px;
+  border-top: 0;
+  border-bottom: 0;
+}
+
+.btn-menu:hover {
+  background-color: var(--quaternary-color);
+  color: var(--primary-color);
+  border: solid var(--primary-color) 2px;
+  border-top: 0;
+  border-bottom: 0;
+}
+
 .btn-primary {
-  background-color: var(--secondary-color);
-  color: white;
-  
+  background-color: white;
+  color: var(--quaternary-color);
+  border-radius: 10px;
+  border: solid var(--quaternary-color) 2px;
 }
 
 .btn-secondary {
@@ -64,6 +80,7 @@ COMPONENT BUTTON --
   background-color: rgb(120, 120, 13);
   color: white;
 }
+
 
 
 
@@ -96,4 +113,28 @@ COMPONENT INPUT --
 #component-model-input label {
   color: var(--primary-color);
   font-size: 20px;
+}
+
+/*
+Barra Superior
+*/
+
+.top-bar{
+  background-color: var(--primary-color);
+
+}
+
+.top-bar #logo{
+  width: 80px;
+}
+.top-bar #box-logo{
+  width: 10%;
+}
+
+.top-bar-secondy-part{
+}
+
+.top-bar-ul{
+  display: flex;
+  flex-direction: row;
 }

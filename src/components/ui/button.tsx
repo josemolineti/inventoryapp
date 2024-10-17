@@ -38,6 +38,8 @@ function Button({ text, color, link, onClick }: IButtonProps): JSX.Element {
         return "btn-secondary";
       case 3:
         return "btn-tertiary";
+        case 4: 
+        return"btn-menu";
       default:
         return "btn-primary";
     }
