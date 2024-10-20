@@ -7,6 +7,8 @@ interface IInputProps {
     label?: string;
     max?: number;
     min?: number;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 
 }
 
@@ -19,12 +21,14 @@ interface IInputProps {
  * @param {string} label - define o texto label em cima do input, o texto principal falando o que é o input
  * @param {number} max - (OPCIONAL) se for um input de number, define o valor MÁXIMO que pode ser preenchido
  * @param {number} min - (OPCIONAL) se for um input de number, define o valor MÍNIMO que pode ser preenchido
+ * @param {string} value - valor atual do input
+ * @param {function} onChange - atualiza o valor do input 
  * 
  * EX: <Input type='text' placeholder='Preencha o nome do usuario' required/> 
  * * @returns {JSX.Element}
  */
 
-function Input({ type, placeholder, required, label }: IInputProps): JSX.Element {
+function Input({ type, placeholder, required, label, value, onChange }: IInputProps): JSX.Element {
     return (
         <div id="component-model-input">
             <label>{label}</label>
@@ -32,6 +36,8 @@ function Input({ type, placeholder, required, label }: IInputProps): JSX.Element
                 type={type}
                 placeholder={placeholder}
                 required={required}
+                value={value}
+                onChange={onChange}
             />
         </div>
     );
