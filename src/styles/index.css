@@ -24,7 +24,6 @@ COMPONENT LOGO --
 */
 
 #box-logo {
-  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,68 +31,12 @@ COMPONENT LOGO --
 }
 
 #box-logo span {
-  color: var(--secondary-color);
+  color: var(--quaternary-color);
   margin-top: 30px;
   font-weight: bold;
   font-size: 20pt;
 }
 
-/*
-COMPONENT BUTTON --
-*/
-
-#botao-personalizado {
-  position: relative;
-  width: 2vw;
-  height: 2vw;
-}
-
-.btn-menu {
-  background-color: var(--primary-color);
-  color: var(--quaternary-color);
-  border: solid var(--quaternary-color) 2px;
-  border-top: 0;
-  border-bottom: 0;
-}
-
-.btn-menu:hover {
-  background-color: var(--quaternary-color);
-  color: var(--primary-color);
-  border: solid var(--primary-color) 2px;
-  border-top: 0;
-  border-bottom: 0;
-}
-
-.btn-primary {
-  background-color: var(--quaternary-color);
-  color: white;
-  border-radius: 10px;
-  border: solid var(--quaternary-color) 2px;
-}
-
-.btn-primary:hover {
-  background-color: white;
-  color: var(--quaternary-color);
-  transition: 0.2s;
-  cursor: pointer;
-}
-
-.btn-secondary {
-  background-color: red;
-  color: white;
-}
-
-.btn-tertiary {
-  background-color: rgb(120, 120, 13);
-  color: white;
-}
-
-
-
-
-/*
-COMPONENT INPUT --
-*/
 #component-model-input {
   position: relative;
   display: flex;
@@ -120,28 +63,4 @@ COMPONENT INPUT --
 #component-model-input label {
   color: var(--primary-color);
   font-size: 20px;
-}
-
-/*
-Barra Superior
-*/
-
-.top-bar{
-  background-color: var(--primary-color);
-
-}
-
-.top-bar #logo{
-  width: 80px;
-}
-.top-bar #box-logo{
-  width: 10%;
-}
-
-.top-bar-secondy-part{
-}
-
-.top-bar-ul{
-  display: flex;
-  flex-direction: row;
 }
