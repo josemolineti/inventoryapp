@@ -31,7 +31,6 @@ body.login-page {
     transition: all 0.3s ease;
 }
 
-
 #profile-picture-example {
     position: absolute;
     top: 0;
@@ -51,7 +50,6 @@ body.login-page {
     position: relative;
     width: 65%;
     height: auto;
-
 }
 
 #box-content {
@@ -102,7 +100,6 @@ body.login-page {
 #form-functions .link:hover {
     text-decoration: underline;
     cursor: pointer;
-    
 }
 
 #form-functions .link:first-of-type {
@@ -135,8 +132,6 @@ body.login-page {
     width: 60%;
 }
 
-
-
 #botao-personalizado {
     margin-top: 2vw;
     width: 50%;
@@ -151,38 +146,54 @@ body.register-page {
 }
 
 .register-page #login-title {
-    margin-left: 100px;
+    font-size: 2rem;
     
+    align-self: flex-start;
+    padding-left: 20px;
 }
 
 .register-page .form-background-div {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    height: 70%;
+    align-items: center;
+    justify-content: center;
+    width: 120%;
+    height: 80%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
-
 
 .register-page #forms-block {
     position: relative;
+    width: 100%;
     max-width: 800px; 
-    margin: 0 auto; 
-    display: flex;
-    gap: 15vw; 
-    align-items: flex-start; 
-}
-
-#forms-block form {
-    flex: 1; 
-}
-
-#component-model-input {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px; 
+    align-items: center;
+    justify-content: center;
 }
 
-#component-model-input label {
+.register-page #forms-block #forms {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+    gap: 10vw;
+}
+
+.register-page #forms > div {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    height: 50%;
+    
+    
+}
+
+.register-page #component-model-input label {
     width: 100%;
     margin-bottom: 5px; 
     font-weight: bold; 
@@ -194,7 +205,25 @@ body.register-page {
     box-sizing: border-box; 
 }
 
-#form-background-div button {
-    width: 10%;
-    color: red;
+.register-page #button-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.register-page #teste {
+    position: relative;    
+    
+}
+
+
+/*ALTERAR SENHA PAGE*/
+.change-pwd-page {
+    background-color: var(--primary-color);
+}
+
+.change-pwd-page .form-background-div form {
+    position: relative;
+    width: 100%;
 }

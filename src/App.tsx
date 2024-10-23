@@ -4,6 +4,7 @@ import FornecedorRoutes from './router/supplierRouter';
 import Home from './pages/home/index';
 import Login from './pages/login/index'
 import Register from './pages/register/index';
+import ChangePassword from './pages/changePassword';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path='/' element={<Login />} />
           <Route path='/registrar' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/alterar-senha' element={<ChangePassword />}/>
           <Route path='/home' element={<Home />} />
           <Route path='/login' />
           <Route path='/registrar' />

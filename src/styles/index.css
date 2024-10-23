@@ -46,6 +46,7 @@ COMPONENT BUTTON --
   position: relative;
   width: 2vw;
   height: 2vw;
+  font-weight: bold;
 }
 
 .btn-menu {
