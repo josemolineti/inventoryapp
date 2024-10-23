@@ -7,6 +7,7 @@ body.login-page {
 
 #login-title {
     color: var(--secondary-color);
+    font-size: 2rem;
 }
 
 .form-background-div {
@@ -18,12 +19,10 @@ body.login-page {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 40px;
-
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -138,7 +137,6 @@ body.login-page {
     height: 10%;
 }
 
-
 /*REGISTER PAGE*/
 
 body.register-page {
@@ -147,7 +145,6 @@ body.register-page {
 
 .register-page #login-title {
     font-size: 2rem;
-    
     align-self: flex-start;
     padding-left: 20px;
 }
@@ -167,7 +164,7 @@ body.register-page {
 .register-page #forms-block {
     position: relative;
     width: 100%;
-    max-width: 800px; 
+    max-width: 800px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -189,20 +186,18 @@ body.register-page {
     flex-direction: column;
     width: 48%;
     height: 50%;
-    
-    
 }
 
 .register-page #component-model-input label {
     width: 100%;
-    margin-bottom: 5px; 
-    font-weight: bold; 
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 #forms-block input {
     width: 100%;
     padding: 10px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 .register-page #button-div {
@@ -213,17 +208,131 @@ body.register-page {
 }
 
 .register-page #teste {
-    position: relative;    
-    
+    position: relative;
 }
-
 
 /*ALTERAR SENHA PAGE*/
 .change-pwd-page {
     background-color: var(--primary-color);
 }
 
+.change-pwd-page .form-background-div {
+    height: 70%;
+}
+
 .change-pwd-page .form-background-div form {
     position: relative;
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.change-pwd-page #botao-personalizado {
+    position: relative;
+}
+
+/* CSS Responsivo */
+@media (max-width: 768px) {
+    body.login-page,
+    body.register-page,
+    .change-pwd-page {
+        background-color: var(--primary-color);
+    }
+
+    #login-title {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .form-background-div {
+        width: 90%;
+        height: auto;
+        padding: 20px;
+    }
+
+    #profile-picture-example {
+        width: 20vw;
+        height: 20vw;
+    }
+
+    #box-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #box-content img {
+        width: 70%;
+        margin-bottom: 20px;
+    }
+
+    #box-content form {
+        width: 90%;
+    }
+
+    #component-model-input input {
+        width: 100%;
+        font-size: 14px !important;
+        padding: 10px !important;
+    }
+
+    #component-model-input label {
+        font-size: 14px;
+    }
+
+    #botao-personalizado {
+        width: 100%;
+        height: auto;
+        padding: 12px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-background-div {
+        width: 95%;
+        height: auto;
+        padding: 15px;
+    }
+
+    #profile-picture-example {
+        width: 12vw;
+        height: 12vw;
+    }
+
+    #box-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #box-content img {
+        width: 80%;
+        margin-bottom: 15px;
+    }
+
+    #box-content form {
+        width: 95%;
+    }
+
+    #component-model-input input {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    #component-model-input label {
+        font-size: 12px;
+    }
+
+    #botao-personalizado {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    #login-title {
+        font-size: 1.25rem;
+        text-align: center;
+    }
 }

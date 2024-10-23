@@ -8,6 +8,17 @@ function ChangePassword() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (newPassword == confirmNewPassword) {
+            alert("Senha alterada com sucesso")
+            console.log({ username, newPassword, confirmNewPassword });
+        } else {
+            alert("As senhas são diferentes!")
+        }
+        
+    };
+
     useEffect(() => {
         document.body.classList.add('change-pwd-page');
 
@@ -15,12 +26,13 @@ function ChangePassword() {
             document.body.classList.remove('change-pwd-page');
         };
     }, []);
+    
     return (
         <>
             <div className='form-background-div'>
                 <h1 id='login-title'>Alterar Senha</h1>
 
-                <form action="" id='div-form'>
+                <form action="" id='div-form' onSubmit={handleSubmit}>
                     <Input
                         type='text'
                         placeholder='Digite seu usuario'
