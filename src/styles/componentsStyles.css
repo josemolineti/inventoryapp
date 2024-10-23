@@ -62,15 +62,19 @@ COMPONENT BUTTON
   */
   .top-bar {
       background-color: var(--primary-color);
-      padding: 10px 0;
   }
 
   .top-bar #logo {
-      width: 70px;
+      width: 4.5vw;
   }
 
   .top-bar #box-logo {
-      width: 120px;
+      width: 15vw;
+  }
+
+  .top-bar #box-logo span{
+    margin: 5px;
+    font-size: 1.5vw;
   }
 
   .desktop ul {
@@ -79,26 +83,50 @@ COMPONENT BUTTON
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: 4rem;
+      gap: 7vw;
+  }
+  .desktop li{
+    border-bottom: solid var(--quaternary-color) 2px;
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+  }
+
+  .desktop li:hover{
+    border-bottom: solid white;
+    justify-content: center;
   }
 
   .desktop a {
       text-decoration: none;
       background-color: var(--primary-color);
       color: var(--quaternary-color);
+      font-size: 1.2vw;
   }
 
   .desktop a:hover {
-      color: var(--secondary-color);
+      color: var(--primary-color);
+      background-color: var(--quaternary-color);
+      border-radius: 5px 5px 0 0;
   }
 
   .mobile {
-      display: flex;
-      flex-direction: column;
-      background-color: var(--secondary-color);
-      height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--quaternary-color);
+    width: 100%;
+    height: 100%;
+    align-items: center;
   }
-
+  .mobile img{
+    display:flex;
+    flex-direction: column;
+    align-items: end;
+  }
   .mobile a {
       text-decoration: none;
       color: var(--primary-color);
@@ -106,75 +134,95 @@ COMPONENT BUTTON
       font-weight: bolder;
   }
 
-  .mobile ul {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
+  .mobile ul{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
   }
 
   .mobile li {
-      border-bottom: solid var(--quaternary-color) 1px;
+      border-bottom: solid var(--primary-color) 1px;
       width: 80vw;
       text-align: center;
-      height: 8vh;
+      height: 12vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
   }
-
+  .mobile li:hover {
+    width: 90vw;
+    background-color: white;
+}
 .mobile-bg{
     background-color: var(--primary-color);
     width: 100%;
     display: flex;
     flex-direction: column;
     text-align: right;
+    align-items: end;
     justify-content: center;
 }
-.mobile span{
-    border-bottom: solid var(--quaternary-color) 1px;
+.mobile-bg span{
+    display: flex;
+    flex-direction: column;
 }
 
+.menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 11vw;
+    align-items: center;
+} 
+.close{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 11vw;
+    align-items: center;
+}
 
-  .btn-wrapper {
-    cursor: pointer;
-    padding: 2px;
+.close-menu{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
     order: -1;
-    margin: 0px 10px;
-    height: 80px;
+    margin-top: 0;
+    height: 13vw;
+}
+
+.btn-wrapper {
+    cursor: pointer;
+    order: -1;
+    margin: 0 10px;
 }
 
   @media(width <=720px) {
       .desktop {
           display: none;
+          justify-content: center;
       }
-
 
       .top-bar {
         display: flex;
         flex-direction: row;
+        height: 13vw;
       }
 
       .logo-bar {
-          background-color: var(--primary-color);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 13.5vh;
-          padding: 10px 0;
-          border-bottom: solid var(--quaternary-color) 1px;
+        padding: 0 8vw;
       }
 
       .top-bar #logo {
-          width: 50px;
+          width: 12vw;
       }
 
       .top-bar #box-logo {
-          width: 120px;
+          width: 10vw;
       }
 
-      .top-bar #box-logo span {
-          margin-top: 10px;
-      }
 
   }
 
@@ -182,4 +230,12 @@ COMPONENT BUTTON
     .mobile-bg {
         display: none;
     }
+  }
+
+  .btn-wrapper img{
+    width: 13vw;
+  }
+
+  .close img{
+    width: 13vw;
   }

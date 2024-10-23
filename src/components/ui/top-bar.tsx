@@ -5,6 +5,7 @@ import Close from "@/assets/close.svg";
 import Menu from "@/assets/menu.svg";
 
 function TopBar(): JSX.Element {
+ 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 720);
 
     useEffect(() => {
@@ -24,8 +25,8 @@ function TopBar(): JSX.Element {
 
     return (
         <nav className='top-bar'>
-            <div className="logobar">
-                <Logo clickable={true} onlyLogo={!isMobile} />
+            <div className="logo-bar">
+                <Logo clickable={true} onlyLogo={isMobile} />
             </div>
             <div className='desktop'>
                 <ul>
@@ -72,13 +73,15 @@ function TopBar(): JSX.Element {
                                 <a href="/login">Sair</a>
                             </li>
                         </ul>
-                        <span onClick={() => setShowMobileMenu(!showMobileMenu)} className="btn-wrapper">
-                            <img src={Close} alt="ícone fechar menu" width={24} height={24} />
+                        <div className="close-menu">
+                        <span onClick={() => setShowMobileMenu(!showMobileMenu)} className="btn-wrapper close">
+                            <img src={Close} alt="ícone fechar menu" />
                         </span>
+                        </div>
                     </div>
                     :
-                        <span onClick={() => setShowMobileMenu(!showMobileMenu)} className="btn-wrapper" >
-                            <img src={Menu} alt="ícone menu" width={24} height={24} />
+                        <span onClick={() => setShowMobileMenu(!showMobileMenu)} className="btn-wrapper menu" >
+                            <img src={Menu} alt="ícone menu"/>
                         </span>
                 }
             </div>
