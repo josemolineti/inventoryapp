@@ -55,7 +55,7 @@ function Login() {
                             <Link to={'/alterar-senha'} className='link'>Esqueceu sua senha?</Link>
                             <Link to={'/registrar'} className='link'>Registre-se</Link>
                         </div>
-                        <Button color={1} text='Entrar' />
+                        <Button color={1} text='Entrar'/>
                     </form>
                 </div>
             </div>

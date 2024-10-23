@@ -24,7 +24,6 @@ COMPONENT LOGO --
 */
 
 #box-logo {
-  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,11 +31,12 @@ COMPONENT LOGO --
 }
 
 #box-logo span {
-  color: var(--secondary-color);
+  color: var(--quaternary-color);
   margin-top: 30px;
   font-weight: bold;
   font-size: 20pt;
 }
+
 
 /*
 COMPONENT BUTTON --
@@ -95,6 +95,7 @@ COMPONENT BUTTON --
 /*
 COMPONENT INPUT --
 */
+
 #component-model-input {
   position: relative;
   display: flex;
@@ -121,28 +122,4 @@ COMPONENT INPUT --
 #component-model-input label {
   color: var(--primary-color);
   font-size: 20px;
-}
-
-/*
-Barra Superior
-*/
-
-.top-bar{
-  background-color: var(--primary-color);
-
-}
-
-.top-bar #logo{
-  width: 80px;
-}
-.top-bar #box-logo{
-  width: 10%;
-}
-
-.top-bar-secondy-part{
-}
-
-.top-bar-ul{
-  display: flex;
-  flex-direction: row;
 }
