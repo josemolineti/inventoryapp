@@ -4,6 +4,7 @@ interface IButtonProps {
   text?: string;
   color: number;
   link?: string;
+  type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
 }
 
@@ -16,10 +17,11 @@ interface IButtonProps {
  * @param {string} text - (OPCIONAL) texto do botao
  * @param {number} color - (OBRIGATORIO) define se o botão é primario(1), secundario(2), ou terciario(3) - deve usar apenas numeros
  * @param {string} [link] - (OPCIONAL) rota pra mandar pra outra pagina EX: /fornecedores
+ * @param {string} type - (OPCIONAL) define o tipo/função do botao relativo ao formulario
  * @param {onClick} onClick - (OPCIONAL) parametro pra executar alguma funcao, crie uma func. de seta e passe-a aqui :)
  * @returns {JSX.Element} 
  */
-function Button({ text, color, link, onClick }: IButtonProps): JSX.Element {
+function Button({ text, color, link, type, onClick }: IButtonProps): JSX.Element {
   const navigate = useNavigate();
   const handleClick = () => {
     if (onClick) {
@@ -46,7 +48,7 @@ function Button({ text, color, link, onClick }: IButtonProps): JSX.Element {
   };
 
   return (
-    <button id='botao-personalizado' onClick={handleClick} className={getButtonClass()}>
+    <button id='botao-personalizado' onClick={handleClick} className={getButtonClass()} type={type}>
       {text}
     </button>
   );

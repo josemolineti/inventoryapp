@@ -36,6 +36,8 @@ function Login() {
                         <h1 id="login-title">LOGIN</h1>
 
                         <Input
+                            color={1}
+                            labelColor={1}
                             type='text'
                             placeholder='Digite seu Nome'
                             label='Nome'
@@ -44,6 +46,8 @@ function Login() {
                             onChange={(e) => setUsername(e.target.value)}
                         />
                         <Input
+                            color={1}
+                            labelColor={1}
                             type='password'
                             placeholder='Digite sua senha'
                             label='Senha'
@@ -55,7 +59,7 @@ function Login() {
                             <Link to={'/alterar-senha'} className='link'>Esqueceu sua senha?</Link>
                             <Link to={'/registrar'} className='link'>Registre-se</Link>
                         </div>
-                        <Button color={1} text='Entrar'/>
+                        <Button color={1} text='Entrar' />
                     </form>
                 </div>
             </div>
