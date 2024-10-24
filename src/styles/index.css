@@ -2,8 +2,6 @@
 vinão esse é o css principal, é o basico pra todas as paginas;
 - cada pagina tambem tem o seu css especifico, o arquivo esta na pasta styles com o nome da pagina, por exemplo: style_login e tals
 */
-
-@import url('style_responsivo.css');
 @import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 
 * {
@@ -13,10 +11,47 @@ vinão esse é o css principal, é o basico pra todas as paginas;
 }
 
 :root {
---primary-color: #16325B;
---secondary-color: #78B7D0;
---tertiary-color: #227B94;
---quaternary-color: #FFC21F;
+  --primary-color: #16325B;
+  --secondary-color: #78B7D0;
+  --tertiary-color: #227B94;
+  --quaternary-color: #FFC21F;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
 }
 
 
+/* SCROLL PERSONALIZADO */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--tertiary-color);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--quaternary-color) var(--primary-color);
+}

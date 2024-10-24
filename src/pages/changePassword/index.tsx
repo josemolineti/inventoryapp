@@ -16,7 +16,7 @@ function ChangePassword() {
         } else {
             alert("As senhas são diferentes!")
         }
-        
+
     };
 
     useEffect(() => {
@@ -26,7 +26,7 @@ function ChangePassword() {
             document.body.classList.remove('change-pwd-page');
         };
     }, []);
-    
+
     return (
         <>
             <div className='form-background-div'>
@@ -34,6 +34,8 @@ function ChangePassword() {
 
                 <form action="" id='div-form' onSubmit={handleSubmit}>
                     <Input
+                        color={1}
+                        labelColor={1}
                         type='text'
                         placeholder='Digite seu usuario'
                         label='Usuario'
@@ -42,6 +44,8 @@ function ChangePassword() {
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <Input
+                        color={1}
+                        labelColor={1}
                         type='password'
                         placeholder='Digite sua nova Senha'
                         label='Nova senha'
@@ -50,6 +54,8 @@ function ChangePassword() {
                         onChange={(e) => setNewPassword(e.target.value)}
                     />
                     <Input
+                    color={1}
+                    labelColor={1}
                         type='password'
                         placeholder='Confirmar nova senha'
                         label='Confirmar nova senha'
@@ -57,7 +63,7 @@ function ChangePassword() {
                         value={confirmNewPassword}
                         onChange={(e) => setConfirmNewPassword(e.target.value)}
                     />
-                    <Button color={1} text='Alterar senha'/>
+                    <Button color={1} text='Alterar senha' />
                 </form>
 
             </div>

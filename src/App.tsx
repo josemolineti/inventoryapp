@@ -22,7 +22,7 @@ function App() {
           <Route path='/registrar' />
           {/*aqui embaixo eu fiz a rota principal dos fornecedores, que vai pro controlador onde vai redirecionar pras subrotas no arquivo FornecedorRoutes */}
           {/*fazer essa mesms estrutura pras outras paginas */}
-          <Route path='/fornecedores' element={<FornecedorRoutes />} />
+          <Route path='/fornecedores/*' element={<FornecedorRoutes />} />
           <Route path='/pedidos' />
           <Route path='/clientes' />
           <Route path='/produtos' />
