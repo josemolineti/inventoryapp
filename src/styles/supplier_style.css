@@ -42,17 +42,21 @@
 .supplier-card {
     background-color: var(--secondary-color);
     margin: 5vw;
-    margin-top: 1vw;
-    margin-bottom: -1vw;
+    margin-top: 2vw;
+    margin-bottom:-1vw;
     height: auto;
     width: 80%;
     border-radius: 1vw;
     color: white;
     font-size: 1.7vw;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
 }
 
 #info-supp-card {
+    position: relative;
+    width: 80%;
     margin: 2vw;
     align-content: center;
 }
@@ -85,4 +89,9 @@
     #info-box form button {
         font-size: 3vw;
     }
+}
+
+#div-button-functions {
+    display: flex;
+    flex-direction: column;
 }
