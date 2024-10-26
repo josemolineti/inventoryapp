@@ -3,6 +3,7 @@ import { useState } from 'react';
 import '@/styles/supplier_style.css';
 import TopBar from '@/components/ui/top-bar';
 import Input from '@/components/ui/input';
+import CardButtonFunction from '@/components/ui/card-button-func';
 
 interface Supplier {
     name: string;
@@ -47,6 +48,11 @@ function SupplierList() {
                                 <h3>{supplier.name}</h3>
                                 <p>Telefone: {supplier.phone}</p>
                                 <p>Endereço: {supplier.address}</p>
+                            </div>
+                            <div id='div-button-functions'>
+                                <CardButtonFunction type={1} />
+                                <CardButtonFunction type={2} />
+                                <CardButtonFunction type={3} />
                             </div>
                         </div>
                     ))}
