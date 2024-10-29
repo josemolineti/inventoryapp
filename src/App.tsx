@@ -1,10 +1,10 @@
-import { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import FornecedorRoutes from './router/supplierRouter';
 import Home from './pages/home/index';
 import Login from './pages/login/index'
 import Register from './pages/register/index';
 import ChangePassword from './pages/changePassword';
+import CustomerRoutes from './router/customerRouter';
 
 function App() {
 
@@ -24,7 +24,7 @@ function App() {
           {/*fazer essa mesms estrutura pras outras paginas */}
           <Route path='/fornecedores/*' element={<FornecedorRoutes />} />
           <Route path='/pedidos' />
-          <Route path='/clientes' />
+          <Route path='/clientes/*' element={<CustomerRoutes />} />
           <Route path='/produtos' />
           <Route path='/pedidos' />
           <Route path='/transacoes' />

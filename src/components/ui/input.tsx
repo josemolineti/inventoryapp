@@ -4,7 +4,7 @@ interface IInputProps {
     color: number;
     labelColor: number;
     type: string;
-    placeholder: string;
+    placeholder?: string;
     required?: boolean;
     label?: string;
     name?: string;

@@ -11,7 +11,8 @@
     position: relative;
     width: 70%;
     overflow-y: auto; 
-    max-height: 100vh; 
+    max-height: 85vh; 
+    padding-bottom: 40px;
 }
 
 #info-box {
@@ -22,6 +23,14 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+}
+
+#box-h1 {
+    position: relative;
+    text-align: center;
+    margin: 1vw;
+    color: var(--quaternary-color);
+    font-size: 1vw;
 }
 
 #info-box form {
@@ -41,9 +50,9 @@
 
 .supplier-card {
     background-color: var(--secondary-color);
-    margin: 5vw;
+    margin: 5vw; 
     margin-top: 2vw;
-    margin-bottom:-1vw;
+    margin-bottom: 2vw; 
     height: auto;
     width: 80%;
     border-radius: 1vw;
@@ -94,4 +103,31 @@
 #div-button-functions {
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px; 
 }
+
+
+/*ÁGINA EDITAR */
+.supplier-edit #info-box {
+    background-color: var(--primary-color);
+    align-items: center;
+    padding-top: 20vw;
+  
+}
+
+.supplier-edit #form-box {
+    position: relative;
+    width: 80%;
+
+    
+}
+
+.supplier-edit #form-box form {
+    text-align: center;
+    margin-top: 2vw;
+}
+
+.supplier-edit #form-box form h1 {
+    color: var(--quaternary-color);
+}
+

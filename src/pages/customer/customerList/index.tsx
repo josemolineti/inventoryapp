@@ -5,21 +5,21 @@ import TopBar from '@/components/ui/top-bar';
 import Input from '@/components/ui/input';
 import CardButtonFunction from '@/components/ui/card-button-func';
 
-interface Supplier {
+interface Customer {
     id: string;
     name: string;
-    cnpj: string;
     phone: string;
+    cpf_cnpj: string;
     address: string;
 }
 
-function SupplierList() {
+function customerList() {
     const [idCounter, setIdCounter] = useState(1);
-    const [suppliers, setSuppliers] = useState<Supplier[]>([]);
-    const [formData, setFormData] = useState<Omit<Supplier, 'id'>>({
+    const [customers, setCustomers] = useState<Customer[]>([]);
+    const [formData, setFormData] = useState<Omit<Customer, 'id'>>({
         name: '',
         phone: '',
-        cnpj: '',
+        cpf_cnpj: '',
         address: ''
     });
 
@@ -31,44 +31,41 @@ function SupplierList() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const newSupplier = { id: idCounter.toString(), ...formData };
-        setSuppliers([...suppliers, newSupplier]);
+        setCustomers([...customers, newSupplier]);
         setIdCounter(idCounter + 1);
         setFormData({
             name: '',
             phone: '',
-            cnpj: '',
+            cpf_cnpj: '',
             address: ''
         });
     };
 
-
     const handleDelete = (id: string) => {
-        setSuppliers(suppliers.filter(supplier => supplier.id !== id));
+        setCustomers(customers.filter(customer => customer.id !== id));
     };
 
     return (
         <>
-            <header>
-                <TopBar />
-            </header>
-            <div id="main-box">
+            <header><TopBar /></header>
 
+            <div id="main-box">
                 <div id="supplier-cards">
                     <div id="box-h1">
-                        <h1>Fornecedores</h1>
+                        <h1>Clientes</h1>
                     </div>
-                    {suppliers.map((supplier) => (
-                        <div key={supplier.id} className="supplier-card">
+                    {customers.map((customer) => (
+                        <div key={customer.id} className="supplier-card">
                             <div id="info-supp-card">
-                                <h3>{supplier.name}</h3>
-                                <p>Telefone: {supplier.phone}</p>
-                                <p>CNPJ: {supplier.cnpj}</p>
-                                <p>Endereço: {supplier.address}</p>
+                                <h3>{customer.name}</h3>
+                                <p>Telefone: {customer.phone}</p>
+                                <p>CPF/CNPJ: {customer.cpf_cnpj}</p>
+                                <p>Endereço: {customer.address}</p>
                             </div>
                             <div id="div-button-functions">
-                                <CardButtonFunction type={1} objectId={supplier.id} onDelete={handleDelete} reference='fornecedores' />
-                                <CardButtonFunction type={2} objectId={supplier.id} onDelete={() => { }} reference='fornecedores' />
-                                <CardButtonFunction type={3} objectId={supplier.id} onDelete={handleDelete} reference='fornecedores' />
+                                <CardButtonFunction type={1} objectId={customer.id} onDelete={handleDelete} reference='clientes' />
+                                <CardButtonFunction type={2} objectId={customer.id} onDelete={() => { }} reference='clientes' />
+                                <CardButtonFunction type={3} objectId={customer.id} onDelete={handleDelete} reference='clientes' />
                             </div>
                         </div>
                     ))}
@@ -80,7 +77,7 @@ function SupplierList() {
                             color={2}
                             labelColor={2}
                             type="text"
-                            placeholder="Nome do fornecedor"
+                            placeholder="Nome do cliente"
                             label="Nome"
                             name="name"
                             value={formData.name}
@@ -91,7 +88,7 @@ function SupplierList() {
                             color={2}
                             labelColor={2}
                             type="tel"
-                            placeholder="Telefone do fornecedor"
+                            placeholder="Telefone do cliente"
                             label="Telefone"
                             name="phone"
                             value={formData.phone}
@@ -102,10 +99,10 @@ function SupplierList() {
                             color={2}
                             labelColor={2}
                             type="text"
-                            placeholder="CNPJ do fornecedor"
-                            label="CNPJ"
-                            name="cnpj"
-                            value={formData.cnpj}
+                            placeholder="CPF/CNPJ do cliente"
+                            label="CPF"
+                            name="cpf_cnpj"
+                            value={formData.cpf_cnpj}
                             onChange={handleInputChange}
                             required
                         />
@@ -113,19 +110,19 @@ function SupplierList() {
                             color={2}
                             labelColor={2}
                             type="text"
-                            placeholder="Endereço do fornecedor"
+                            placeholder="Endereço do cliente"
                             label="Endereço"
                             name="address"
                             value={formData.address}
                             onChange={handleInputChange}
                             required
                         />
-                        <Button color={1} text="Criar Fornecedor" type="submit" />
+                        <Button color={1} text="Criar Cliente" type="submit" />
                     </form>
                 </div>
             </div>
         </>
-    );
+    )
 }
 
-export default SupplierList;
+export default customerList;
