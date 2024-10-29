@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-
+import logo from "@/assets/app-icon.svg";
 interface ILogoProps {
     onlyLogo: boolean;
     clickable: boolean;
@@ -18,12 +18,12 @@ function Logo({ onlyLogo, clickable }: ILogoProps): JSX.Element {
         <>
             {onlyLogo ? (
                 <>
-                    <img id='logo' src="src\assets\app-icon.svg" alt="Logo Aplicativo Pandora" />
+                    <img id='logo' src={logo} alt="Logo Aplicativo Pandora" />
                 </>
 
             ) : (
                 <>
-                    <img id='logo' src="src\assets\app-icon.svg" alt="Logo Aplicativo Pandora" />
+                    <img id='logo' src={logo} alt="Logo Aplicativo Pandora" />
                     <span>PANDORA</span>
                 </>
             )}

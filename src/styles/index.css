@@ -15,6 +15,8 @@ vinão esse é o css principal, é o basico pra todas as paginas;
   --secondary-color: #78B7D0;
   --tertiary-color: #227B94;
   --quaternary-color: #FFC21F;
+  --alert-color: #FF3434;
+  --alert-color-hover: #de2a2a;
 }
 
 html,

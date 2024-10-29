@@ -4,7 +4,7 @@ interface IButtonProps {
   text?: string;
   color: number;
   link?: string;
-  type?: 'button' | 'submit' | 'reset';
+  type?: 'button' | 'submit' | 'reset' | 'back';
   onClick?: () => void;
 }
 
@@ -21,15 +21,19 @@ interface IButtonProps {
  * @param {onClick} onClick - (OPCIONAL) parametro pra executar alguma funcao, crie uma func. de seta e passe-a aqui :)
  * @returns {JSX.Element} 
  */
-function Button({ text, color, link, type, onClick }: IButtonProps): JSX.Element {
+function Button({ text, color, link, type = 'button', onClick }: IButtonProps): JSX.Element {
   const navigate = useNavigate();
   const handleClick = () => {
-    if (onClick) {
-      onClick();
-    }
+    if (type === 'back') {
+      window.history.back();
+    } else {
+      if (onClick) {
+        onClick();
+      }
 
-    if (link) {
-      navigate(link);
+      if (link) {
+        navigate(link);
+      }
     }
   }
   const getButtonClass = () => {
@@ -40,15 +44,15 @@ function Button({ text, color, link, type, onClick }: IButtonProps): JSX.Element
         return "btn-secondary";
       case 3:
         return "btn-tertiary";
-        case 4: 
-        return"btn-menu";
+      case 4:
+        return "btn-menu";
       default:
         return "btn-primary";
     }
   };
-
+  const buttonType = type === 'back' ? 'button' : type;
   return (
-    <button id='botao-personalizado' onClick={handleClick} className={getButtonClass()} type={type}>
+    <button id='botao-personalizado' onClick={handleClick} className={getButtonClass()} type={buttonType}>
       {text}
     </button>
   );
