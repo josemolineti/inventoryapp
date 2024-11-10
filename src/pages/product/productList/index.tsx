@@ -5,22 +5,24 @@ import TopBar from '@/components/ui/top-bar';
 import Input from '@/components/ui/input';
 import CardButtonFunction from '@/components/ui/card-button-func';
 
-interface ISupplierProps {
+interface IProductProps {
     id: string;
     name: string;
-    cnpj: string;
-    phone: string;
-    address: string;
+    description: string;
+    price: number;
+    quantity: number;
+    image: string;
 }
 
-function SupplierList() {
+function productList() {
     const [idCounter, setIdCounter] = useState(1);
-    const [suppliers, setSuppliers] = useState<ISupplierProps[]>([]);
-    const [formData, setFormData] = useState<Omit<ISupplierProps, 'id'>>({
+    const [products, setProducts] = useState<IProductProps[]>([]);
+    const [formData, setFormData] = useState<Omit<IProductProps, 'id'>>({
         name: '',
-        phone: '',
-        cnpj: '',
-        address: ''
+        description: '',
+        price: 0,
+        quantity: 0,
+        image: '',
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,45 +32,43 @@ function SupplierList() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newSupplier = { id: idCounter.toString(), ...formData };
-        setSuppliers([...suppliers, newSupplier]);
+        const newProduct = { id: idCounter.toString(), ...formData };
+        setProducts([...products, newProduct]);
         setIdCounter(idCounter + 1);
         setFormData({
             name: '',
-            phone: '',
-            cnpj: '',
-            address: ''
+            description: '',
+            price: 0,
+            quantity: 0,
+            image: '',
         });
     };
 
-
     const handleDelete = (id: string) => {
-        setSuppliers(suppliers.filter(supplier => supplier.id !== id));
+        setProducts(products.filter(product => product.id !== id));
     };
 
     return (
         <>
-            <header>
-                <TopBar />
-            </header>
-            <div id="main-box">
+            <header><TopBar /></header>
 
+            <div id="main-box">
                 <div id="supplier-cards">
                     <div id="box-h1">
-                        <h1>Fornecedores</h1>
+                        <h1>Produtos</h1>
                     </div>
-                    {suppliers.map((supplier) => (
-                        <div key={supplier.id} className="supplier-card">
+                    {products.map((product) => (
+                        <div key={product.id} className="supplier-card">
                             <div id="info-supp-card">
-                                <h3>{supplier.name}</h3>
-                                <p>Telefone: {supplier.phone}</p>
-                                <p>CNPJ: {supplier.cnpj}</p>
-                                <p>Endereço: {supplier.address}</p>
+                                <h3>{product.name}</h3>
+                                <p>Descrição: {product.description}</p>
+                                <p>Preço: R$ {product.price}</p>
+                                <p>Quantidade: {product.quantity}</p>
                             </div>
                             <div id="div-button-functions">
-                                <CardButtonFunction type={1} objectId={supplier.id} onDelete={handleDelete} reference='fornecedores' />
-                                <CardButtonFunction type={2} objectId={supplier.id} onDelete={() => { }} reference='fornecedores' />
-                                <CardButtonFunction type={3} objectId={supplier.id} onDelete={handleDelete} reference='fornecedores' />
+                                <CardButtonFunction type={1} objectId={product.id} onDelete={handleDelete} reference='produtos' />
+                                <CardButtonFunction type={2} objectId={product.id} onDelete={() => { }} reference='produtos' />
+                                <CardButtonFunction type={3} objectId={product.id} onDelete={handleDelete} reference='produtos' />
                             </div>
                         </div>
                     ))}
@@ -80,7 +80,7 @@ function SupplierList() {
                             color={2}
                             labelColor={2}
                             type="text"
-                            placeholder="Nome do fornecedor"
+                            placeholder="Nome do produto"
                             label="Nome"
                             name="name"
                             value={formData.name}
@@ -91,10 +91,22 @@ function SupplierList() {
                             color={2}
                             labelColor={2}
                             type="tel"
-                            placeholder="Telefone do fornecedor"
-                            label="Telefone"
-                            name="phone"
-                            value={formData.phone}
+                            placeholder="Descrição do produto"
+                            label="Descrição"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleInputChange}
+                            required
+                        />
+                        <Input
+                            color={2}
+                            labelColor={2}
+                            type="number"
+                            placeholder="Preço do produto"
+                            label="Preço"
+                            name="price"
+                            min={0}
+                            value={formData.price}
                             onChange={handleInputChange}
                             required
                         />
@@ -102,30 +114,20 @@ function SupplierList() {
                             color={2}
                             labelColor={2}
                             type="text"
-                            placeholder="CNPJ do fornecedor"
-                            label="CNPJ"
-                            name="cnpj"
-                            value={formData.cnpj}
+                            placeholder="Quantidade do produto"
+                            label="Quantidade"
+                            name="quantity"
+                            min={0}
+                            value={formData.quantity}
                             onChange={handleInputChange}
                             required
                         />
-                        <Input
-                            color={2}
-                            labelColor={2}
-                            type="text"
-                            placeholder="Endereço do fornecedor"
-                            label="Endereço"
-                            name="address"
-                            value={formData.address}
-                            onChange={handleInputChange}
-                            required
-                        />
-                        <Button color={1} text="Criar Fornecedor" type="submit" />
+                        <Button color={1} text="Criar Produto" type="submit" />
                     </form>
                 </div>
             </div>
         </>
-    );
+    )
 }
 
-export default SupplierList;
+export default productList;

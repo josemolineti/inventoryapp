@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 interface ICardButtonFunctionProps {
     type: 1 | 2 | 3;
     objectId: string;
-    reference: "fornecedores" | "clientes" | "produtos";
+    reference: "fornecedores" | "clientes" | "produtos" | "pedidos";
     onDelete: (id: string) => void;
 }
 

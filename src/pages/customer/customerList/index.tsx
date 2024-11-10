@@ -5,7 +5,7 @@ import TopBar from '@/components/ui/top-bar';
 import Input from '@/components/ui/input';
 import CardButtonFunction from '@/components/ui/card-button-func';
 
-interface Customer {
+interface ICustomerProps {
     id: string;
     name: string;
     phone: string;
@@ -15,8 +15,8 @@ interface Customer {
 
 function customerList() {
     const [idCounter, setIdCounter] = useState(1);
-    const [customers, setCustomers] = useState<Customer[]>([]);
-    const [formData, setFormData] = useState<Omit<Customer, 'id'>>({
+    const [customers, setCustomers] = useState<ICustomerProps[]>([]);
+    const [formData, setFormData] = useState<Omit<ICustomerProps, 'id'>>({
         name: '',
         phone: '',
         cpf_cnpj: '',

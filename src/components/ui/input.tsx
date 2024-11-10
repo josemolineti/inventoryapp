@@ -10,7 +10,7 @@ interface IInputProps {
     name?: string;
     max?: number;
     min?: number;
-    value?: string;
+    value?: string | number;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 
 }
@@ -34,7 +34,7 @@ interface IInputProps {
  * * @returns {JSX.Element}
  */
 
-function Input({ color, labelColor, type, placeholder, required, label, name, value, onChange }: IInputProps): JSX.Element {
+function Input({ color, labelColor, type, placeholder, required, label, name, value, min, max, onChange }: IInputProps): JSX.Element {
     const getInputClass = () => {
         switch (color) {
             case 1:
@@ -67,6 +67,8 @@ function Input({ color, labelColor, type, placeholder, required, label, name, va
                 required={required}
                 value={value}
                 name={name}
+                min={min}
+                max={max}
                 onChange={onChange}
             />
         </div>

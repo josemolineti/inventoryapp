@@ -1,5 +1,5 @@
 import CustomerEdit from '@/pages/customer/customerEdit/index';
-import CustomerList from '../pages/customer/customerList/index';
+import CustomerList from '@/pages/customer/customerList/index';
 import { Route, Routes } from 'react-router-dom';
 
 function CustomerRoutes() {
