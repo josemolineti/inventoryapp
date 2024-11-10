@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
-import Button from "@/components/ui/button";
 import '@/styles/home_style.css'
 import "@/styles/utility.css";
-import { Route, useRoutes } from 'react-router-dom';
 import TopBar from '@/components/ui/top-bar';
 
 function Home() {

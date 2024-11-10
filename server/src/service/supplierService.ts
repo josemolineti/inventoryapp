@@ -1,3 +1,4 @@
+import { sqlite3 } from 'sqlite3';
 import db from '../database/db';
 import { Supplier } from '../models/Supplier';
 
