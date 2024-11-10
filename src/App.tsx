@@ -5,6 +5,8 @@ import Login from './pages/login/index'
 import Register from './pages/register/index';
 import ChangePassword from './pages/changePassword';
 import CustomerRoutes from './router/customerRouter';
+import ProductRoutes from './router/productRouter';
+import Reports from './pages/reports';
 
 function App() {
 
@@ -25,7 +27,8 @@ function App() {
           <Route path='/fornecedores/*' element={<FornecedorRoutes />} />
           <Route path='/pedidos' />
           <Route path='/clientes/*' element={<CustomerRoutes />} />
-          <Route path='/produtos' />
+          <Route path='/produtos/*' element={<ProductRoutes />} />
+          <Route path='/relatorios' element={<Reports />} />
           <Route path='/pedidos' />
           <Route path='/transacoes' />
           <Route path='/users' />

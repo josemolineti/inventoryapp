@@ -43,7 +43,7 @@ function TopBar(): JSX.Element {
                         <a href="/clientes">Clientes</a>
                     </li>
                     <li>
-                        <a href="/#">Nada</a>
+                        <a href="/relatorios">Relatórios</a>
                     </li>
                     <li>
                         <a href="/login">Sair</a>
@@ -67,7 +67,10 @@ function TopBar(): JSX.Element {
                                 <a href="/clientes">Clientes</a>
                             </li>
                             <li>
-                                <a href="/#">Nada</a>
+                                <a href="/pedidos">Pedidos</a>
+                            </li>
+                            <li>
+                                <a href="/relatiorios">Relatórios</a>
                             </li>
                             <li>
                                 <a href="/login">Sair</a>
