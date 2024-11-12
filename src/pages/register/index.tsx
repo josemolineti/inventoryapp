@@ -8,11 +8,12 @@ function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [isAdmin, setIsAdmin] = useState(0);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (password === confirmPassword) {
-            const userData = { nome: username, email, senha: password }; 
+            const userData = { nome: username, email: email, senha: password, isAdmin: isAdmin };
 
             try {
                 console.log('dados:', userData);
@@ -27,15 +28,15 @@ function Register() {
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    console.error('Erro na resposta do servidor:', errorData);
+                    console.error('erro na resposta ', errorData);
                     alert(errorData.message || 'Erro desconhecido');
                 } else {
                     const result = await response.json();
-                    console.log('Resposta do servidor:', result);
-                    alert(result.message); // Exibe a mensagem de sucesso
+                    console.log('response', result);
+                    alert(result.message);
                 }
             } catch (error) {
-                console.error('Erro ao registrar usuário:', error);
+                console.error('erro pra registrar', error);
                 alert('Erro ao registrar usuário.');
             }
         } else {
@@ -62,12 +63,22 @@ function Register() {
                         <div>
                             <Input color={1} labelColor={1} type="text" placeholder="Digite seu Nome" label="Nome" required value={username} onChange={(e) => setName(e.target.value)} />
                             <Input color={1} labelColor={1} type="email" placeholder="Digite seu Email" label="E-mail" required value={email} onChange={(e) => setEmail(e.target.value)} />
+
                         </div>
 
                         <div>
                             <Input color={1} labelColor={1} type="password" placeholder="Crie uma senha" label="Senha" required value={password} onChange={(e) => setPassword(e.target.value)} />
                             <Input color={1} labelColor={1} type="password" placeholder="Repita sua senha" label="Repita sua senha" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                         </div>
+
+                    </div>
+                    <div id='check-admin'>
+                        <input
+                            type="checkbox"
+                            checked={isAdmin === 1}
+                            onChange={(e) => setIsAdmin(e.target.checked ? 1 : 0)}
+                        />
+                        <p>Definir user como admin?</p>
                     </div>
                     <Button color={1} text="Registrar" type='submit' />
                 </form>

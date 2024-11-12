@@ -336,3 +336,20 @@ body.register-page {
         text-align: center;
     }
 }
+
+#check-admin {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
+    
+    p {
+        font-size: 10pt;
+        width: 100%;
+        
+    }
+    input {
+        width: 20%;
+    }
+    
+}

@@ -1,1 +1,1 @@
-export const JWT_SECRET = process.env.JWT_SECRET || 'seu-segredo-forte-aqui';
+export const JWT_SECRET = process.env.JWT_SECRET || 'vinao_do_pinto_senha_fortissima';

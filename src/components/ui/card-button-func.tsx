@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 interface ICardButtonFunctionProps {
     type: 1 | 2 | 3;
-    objectId: string;
+    objectId: number;
     reference: "fornecedores" | "clientes" | "produtos" | "pedidos";
-    onDelete: (id: string) => void;
+    onDelete: (id: number) => void;
 }
 
 function CardButtonFunction({ type, objectId, reference, onDelete }: ICardButtonFunctionProps): JSX.Element {

@@ -3,9 +3,10 @@ import Logo from "@/components/ui/logo";
 import "@/styles/componentsStyles.css";
 import Close from "@/assets/close.svg";
 import Menu from "@/assets/menu.svg";
+import { useAuth } from '@/context/AuthContext';
 
 function TopBar(): JSX.Element {
- 
+    const { user, logout } = useAuth();
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 720);
 
     useEffect(() => {
@@ -46,7 +47,8 @@ function TopBar(): JSX.Element {
                         <a href="/relatorios">Relatórios</a>
                     </li>
                     <li>
-                        <a href="/login">Sair</a>
+                        {user && <li><p>Bem-vindo, {user.nome}</p></li>}
+                        <a href="/login" onClick={logout}>Sair</a>
                     </li>
                 </ul>
             </div>
@@ -77,15 +79,15 @@ function TopBar(): JSX.Element {
                             </li>
                         </ul>
                         <div className="close-menu">
-                        <span onClick={() => setShowMobileMenu(!showMobileMenu)} className="btn-wrapper close">
-                            <img src={Close} alt="ícone fechar menu" />
-                        </span>
+                            <span onClick={() => setShowMobileMenu(!showMobileMenu)} className="btn-wrapper close">
+                                <img src={Close} alt="ícone fechar menu" />
+                            </span>
                         </div>
                     </div>
                     :
-                        <span onClick={() => setShowMobileMenu(!showMobileMenu)} className="btn-wrapper menu" >
-                            <img src={Menu} alt="ícone menu"/>
-                        </span>
+                    <span onClick={() => setShowMobileMenu(!showMobileMenu)} className="btn-wrapper menu" >
+                        <img src={Menu} alt="ícone menu" />
+                    </span>
                 }
             </div>
         </nav>
