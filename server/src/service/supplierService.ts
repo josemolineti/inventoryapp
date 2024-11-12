@@ -1,40 +1,62 @@
-import { sqlite3 } from 'sqlite3';
 import db from '../database/db';
-import { Supplier } from '../models/Supplier';
 
-export const createFornecedor = (supplier: Supplier) => {
-  const { name, cnpj, phone, address } = supplier;
-  const query = `INSERT INTO fornecedores (name, cnpj, phone, address) VALUES (?, ?, ?, ?)`;
-
-  db.run(query, [name, cnpj, phone, address], (err) => {
-    if (err) {
-      console.error("Erro ao adicionar fornecedor:", err);
-    } else {
-      console.log("Fornecedor adicionado com sucesso!");
-    }
+export const findSupplierByCnpj = async (cnpj: string) => {
+  return new Promise<any>((resolve, reject) => {
+    db.get("SELECT * FROM fornecedor WHERE cnpj = ?", [cnpj], (err, row) => {
+      if (err) reject(err);
+      resolve(row);
+    });
   });
 };
 
-export const updateSupplier = (supplier: Supplier) => {
-  const { id, name, cnpj, phone, address } = supplier;
-  const query = `UPDATE fornecedores SET name = ?, cnpj = ?, phone = ?, address = ? WHERE id = ?`;
 
-  db.run(query, [name, cnpj, phone, address, id], (err) => {
+const createSupplier = (req, res) => {
+  const { name, contact } = req.body;
+
+  db.run(`INSERT INTO suppliers (name, contact) VALUES (?, ?)`, [name, contact], function (err) {
     if (err) {
-      console.error("Erro ao atualizar fornecedor", err);
-    } else {
-      console.log("Fornecedor atualizado com sucesso");
+      return res.status(500).json({ error: err.message });
     }
+
+    res.status(201).json({ id: this.lastID, name, contact });
   });
 };
 
-export const getAllSuppliers = (callback: (supplier: Supplier[]) => void) => {
-  const query = `SELECT * FROM fornecedores`;
-  db.all(query, [], (err, rows) => {
-    if (err) {
-      console.error("Erro ao buscar fornecedores", err);
-    } else {
-      //callback(rows);
-    }
+
+export const updateSupplierInDb = (id: string, nome: string, cnpj: string, contato: string, endereco: string) => {
+  return new Promise<any>((resolve, reject) => {
+    const query = "UPDATE fornecedor SET nome = ?, cnpj = ?, contato = ?, endereco = ? WHERE id = ?";
+    db.run(query, [nome, cnpj, contato, endereco, id], function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve({ id, nome, cnpj, contato, endereco });
+      }
+    });
+  });
+};
+
+export const deleteSupplierInDb = (id: string) => {
+  return new Promise<any>((resolve, reject) => {
+    const query = "DELETE FROM fornecedor WHERE id = ?";
+    db.run(query, [id], (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve({ message: "Fornecedor excluído com sucesso" });
+      }
+    });
+  });
+};
+
+export const getSuppliersFromDb = () => {
+  return new Promise<any[]>((resolve, reject) => {
+    db.all("SELECT * FROM fornecedor", [], (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(rows);
+      }
+    });
   });
 };

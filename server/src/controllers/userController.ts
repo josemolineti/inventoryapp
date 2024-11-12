@@ -6,7 +6,7 @@ import { JWT_SECRET } from '../config';
 import { createUser, findUserByEmail } from '../service/userService';
 
 export const registerUser = async (req: Request, res: Response): Promise<Response> => {
-    const { nome, email, senha } = req.body;
+    const { nome, email, senha, isAdmin } = req.body;
 
     if (!nome || !email || !senha) {
         return res.status(400).json({ message: "Todos os campos são obrigatórios" });
@@ -19,7 +19,7 @@ export const registerUser = async (req: Request, res: Response): Promise<Respons
         }
 
         const hashedPassword = await bcrypt.hash(senha, 10);
-        const user = await createUser(nome, email, hashedPassword);
+        const user = await createUser(nome, email, hashedPassword, isAdmin);
 
         console.log('usuario registrado:', user);
 
@@ -37,22 +37,20 @@ export const loginUser = async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'Usuário não encontrado' });
         }
 
-        // verif. hash ->
         const isPasswordValid = await bcrypt.compare(senha, user.senha);
         if (!isPasswordValid) {
             return res.status(401).json({ message: 'Senha incorreta' });
         }
 
         const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' });
-        res.json({ message: 'Login bem-sucedido', token });
 
-
+        res.json({ message: 'Login bem-sucedido', token, nome: user.nome, isAdmin: user.isAdmin });
     } catch (error) {
         console.error('Erro ao realizar login:', error);
         res.status(500).json({ message: 'Erro interno do servidor' });
     }
-
 };
+
 
 export const changePassword = async (req: Request, res: Response) => {
     const { email, newPassword } = req.body;

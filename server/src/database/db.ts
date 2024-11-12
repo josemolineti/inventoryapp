@@ -68,7 +68,8 @@ const db = new sqlite3.Database('./server/src/database/database.db', (err) => {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome TEXT NOT NULL,
             email TEXT NOT NULL,
-            senha TEXT NOT NULL
+            senha TEXT NOT NULL,
+            isAdmin INTEGER NOT NULL
           );
         `;
 

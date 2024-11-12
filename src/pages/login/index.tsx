@@ -4,11 +4,13 @@ import Button from "@/components/ui/button";
 import Input from "@/components/ui/input";
 import Logo from '@/components/ui/logo';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -18,17 +20,21 @@ function Login() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, senha: password }),
+                body: JSON.stringify({ email: email, senha: password }),
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                alert(data.message || 'algum erro ai');
+                alert(data.message || 'Algum erro ao fazer login');
             } else {
                 localStorage.setItem('token', data.token);
-                alert('Bem-vindo! | Bem-Vinda! | Bem-Vinde! | Bem-Vindu! | Bem-Vindi!');
-                navigate('/home'); 
+
+                const userData = { nome: data.nome, isAdmin: data.isAdmin };
+                login(userData); 
+
+                alert('Bem-vindo!');
+                navigate('/home');
             }
         } catch (error) {
             console.error('Erro ao fazer login:', error);
@@ -36,9 +42,9 @@ function Login() {
         }
     };
 
+
     useEffect(() => {
         document.body.classList.add('login-page');
-
         return () => {
             document.body.classList.remove('login-page');
         };
@@ -46,11 +52,11 @@ function Login() {
 
     return (
         <>
-            <div className='form-background-div'>
-                <div id='profile-picture-example'>
+            <div className="form-background-div">
+                <div id="profile-picture-example">
                     <img src="src/assets/profile-icon.svg" alt="" />
                 </div>
-                <div id='box-content'>
+                <div id="box-content">
                     <Logo onlyLogo={false} clickable={false} />
                     <form onSubmit={handleSubmit}>
                         <h1 id="login-title">LOGIN</h1>
@@ -58,9 +64,9 @@ function Login() {
                         <Input
                             color={1}
                             labelColor={1}
-                            type='email'
-                            placeholder='Digite seu Email'
-                            label='Email'
+                            type="email"
+                            placeholder="Digite seu Email"
+                            label="Email"
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -68,18 +74,18 @@ function Login() {
                         <Input
                             color={1}
                             labelColor={1}
-                            type='password'
-                            placeholder='Digite sua senha'
-                            label='Senha'
+                            type="password"
+                            placeholder="Digite sua senha"
+                            label="Senha"
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <div id='form-functions'>
-                            <Link to={'/alterar-senha'} className='link'>Esqueceu sua senha?</Link>
-                            <Link to={'/registrar'} className='link'>Registre-se</Link>
+                        <div id="form-functions">
+                            <Link to="/alterar-senha" className="link">Esqueceu sua senha?</Link>
+                            <Link to="/registrar" className="link">Registre-se</Link>
                         </div>
-                        <Button color={1} text='Entrar' type='submit'/>
+                        <Button color={1} text="Entrar" type="submit" />
                     </form>
                 </div>
             </div>
