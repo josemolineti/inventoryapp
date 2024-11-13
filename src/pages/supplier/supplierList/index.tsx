@@ -8,10 +8,10 @@ import axios from 'axios';
 
 interface ISupplierProps {
     id: number;
-    nome: string; 
+    nome: string;
     cnpj: string;
     contato: string;
-    endereco: string; 
+    endereco: string;
 }
 
 function SupplierList() {
@@ -79,7 +79,8 @@ function SupplierList() {
 
     const handleDelete = async (id: number) => {
         try {
-            await axios.delete(`/api/suppliers/delete/${id}`);
+            // Corrigindo a URL para incluir a porta correta no axios.delete
+            await axios.delete(`http://localhost:3000/api/suppliers/delete/${id}`);
             setSuppliers(prev => prev.filter(supplier => supplier.id !== id));
         } catch (error) {
             setError("Erro ao excluir fornecedor");
@@ -108,9 +109,9 @@ function SupplierList() {
                                     suppliers.map((supplier) => (
                                         <div key={supplier.id} className="supplier-card">
                                             <div id="info-supp-card">
-                                                <h3>{supplier.nome}</h3> 
+                                                <h3>{supplier.nome}</h3>
                                                 <p>Telefone: {supplier.contato}</p>
-                                                <p>CNPJ: {supplier.cnpj}</p> 
+                                                <p>CNPJ: {supplier.cnpj}</p>
                                                 <p>Endereço: {supplier.endereco}</p>
                                             </div>
                                             <div id="div-button-functions">

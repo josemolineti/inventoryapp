@@ -15,19 +15,19 @@ export const registerSupplier = (req: Request, res: Response) => {
     db.run(query, [nome, cnpj, contato, endereco], function (err) {
         if (err) {
             console.error("Erro ao registrar fornecedor:", err);
-            return res.status(500).json({ message: 'Erro ao registrar fornecedor', error: err.message });
+            res.status(500).json({ message: 'Erro ao registrar fornecedor', error: err.message });
+        } else {
+            res.status(201).json({
+                message: 'Fornecedor registrado com sucesso',
+                supplier: {
+                    id: this.lastID,
+                    nome,
+                    cnpj,
+                    contato,
+                    endereco,
+                },
+            });
         }
-
-        return res.status(201).json({
-            message: 'Fornecedor registrado com sucesso',
-            supplier: {
-                id: this.lastID,
-                nome,
-                cnpj,
-                contato,
-                endereco
-            }
-        });
     });
 };
 
@@ -35,25 +35,19 @@ export const registerSupplier = (req: Request, res: Response) => {
 
 
 export const addSupplier = (req: Request, res: Response) => {
-    const { nome, cnpj, contato, endereco } = req.body;
+    const { name, email } = req.body;
 
-    const query = 'INSERT INTO suppliers (nome, cnpj, contato, endereco) VALUES (?, ?, ?, ?)';
-    db.run(query, [nome, cnpj, contato, endereco], function (err) {
+    const query = 'INSERT INTO fornecedor (name, email) VALUES (?, ?)';
+    db.run(query, [name, email], (err) => {
         if (err) {
-            console.error("Erro ao adicionar fornecedor:", err);
-            return res.status(500).json({ error: 'Erro ao adicionar fornecedor', details: err.message });
+            console.error('Erro ao adicionar fornecedor:', err);
+            return res.status(500).json({ error: 'Erro ao adicionar fornecedor' }); // Retorna a resposta e sai da função
         }
 
-        return res.status(201).json({
-            id: this.lastID,
-            nome,
-            cnpj,
-            contato,
-            endereco,
-        });
+        // Aqui, não temos outro "res" depois dessa linha
+        return res.status(201).json({ message: 'Fornecedor adicionado com sucesso' });
     });
 };
-
 
 export const getAllSuppliers = (): Promise<any[]> => {
     return new Promise((resolve, reject) => {
