@@ -18,23 +18,7 @@ COMPONENT BUTTON
     border-radius: 10px;
   }
 
-  /*
-  .btn-menu {
-    background-color: var(--primary-color);
-    color: var(--quaternary-color);
-    border: solid var(--quaternary-color) 2px;
-    border-top: 0;
-    border-bottom: 0;
-  }
-  
-  .btn-menu:hover {
-    background-color: var(--quaternary-color);
-    color: var(--primary-color);
-    border: solid var(--primary-color) 2px;
-    border-top: 0;
-    border-bottom: 0;
-  }
-  */
+
   .btn-primary {
     background-color: var(--quaternary-color);
     color: white;
@@ -67,6 +51,7 @@ COMPONENT BUTTON
     border: solid var(--alert-color) 2px;
     color: white;
   }
+
   .btn-tertiary:hover {
     background-color: var(--alert-color-hover);
     border: solid var(--alert-color--hover) 2px;
@@ -371,5 +356,55 @@ CARD BUTTON FUNCTIONS
     .card-button-function {
       width: 6vw;
       height: 6vw;
+    }
+  }
+
+
+
+  .product-page select {
+    border-radius: 10px;
+    font-size: 14pt;
+    font-weight: bold;
+    color: #16325B;
+    background-color: white;
+    border: 2px solid #16325B;
+    outline: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+    width: 100%;
+
+  }
+
+  .product-page select:focus {
+    border-color: #285A8E;
+
+    .product-page select option {
+      font-size: 14pt;
+      font-weight: normal;
+      color: #16325B;
+      background-color: white;
+    }
+
+    .product-page select option:checked {
+      background-color: #285A8E;
+      color: white;
+    }
+
+    .product-page select:focus-visible {
+      color: #16325B;
+    }
+
+    .product-page select:hover {
+      color: #16325B;
+      background-color: #f0f0f0;
+    }
+
+    .product-page select+.custom-select-arrow {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #16325B;
     }
   }

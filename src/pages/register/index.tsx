@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import '@/styles/login_style.css';
 import Button from "@/components/ui/button";
 import Input from "@/components/ui/input";
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
     const [username, setName] = useState('');
@@ -9,6 +10,7 @@ function Register() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isAdmin, setIsAdmin] = useState(0);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -34,6 +36,7 @@ function Register() {
                     const result = await response.json();
                     console.log('response', result);
                     alert(result.message);
+                    navigate('/')
                 }
             } catch (error) {
                 console.error('erro pra registrar', error);

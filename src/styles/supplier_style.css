@@ -4,14 +4,14 @@
     height: auto;
     display: flex;
     flex-direction: row;
-    
+
 }
 
 #supplier-cards {
     position: relative;
     width: 70%;
-    overflow-y: auto; 
-    max-height: 85vh; 
+    overflow-y: auto;
+    max-height: 85vh;
     padding-bottom: 40px;
 }
 
@@ -39,8 +39,8 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 100%; 
-    padding: 20px; 
+    height: 100%;
+    padding: 20px;
 }
 
 #info-box form button {
@@ -50,9 +50,9 @@
 
 .supplier-card {
     background-color: var(--secondary-color);
-    margin: 5vw; 
+    margin: 5vw;
     margin-top: 2vw;
-    margin-bottom: 2vw; 
+    margin-bottom: 2vw;
     height: auto;
     width: 80%;
     border-radius: 1vw;
@@ -82,7 +82,7 @@
     #info-box {
         width: 100%;
         min-height: auto;
-        height: auto; 
+        height: auto;
     }
 
     #info-box form {
@@ -103,7 +103,7 @@
 #div-button-functions {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 }
 
 
@@ -112,14 +112,14 @@
     background-color: var(--primary-color);
     align-items: center;
     padding-top: 20vw;
-  
+
 }
 
 .supplier-edit #form-box {
     position: relative;
     width: 80%;
 
-    
+
 }
 
 .supplier-edit #form-box form {
@@ -129,5 +129,60 @@
 
 .supplier-edit #form-box form h1 {
     color: var(--quaternary-color);
+}
+
+
+
+/**
+
+css do box do filtro
+**/
+
+.filter-box {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.filter-box input {
+    position: relative;
+    height: 10%;
+
+}
+
+
+
+/*
+produtoo
+*/
+
+.product-page form {
+    margin-top: -1vw;
+}
+
+.product-page form input, select {
+    margin-bottom: -1vw; 
+    box-sizing: border-box; /* Para garantir que o padding seja contido dentro do input */
+}
+
+.product-page form button {
+    position: relative;
+    height: 50%;
+}
+
+
+.product-page input, select {
+    height: 28px; 
+}
+
+.product-page select {
+    width: 100%;
+    
+}
+
+.product-page #supplier-select {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2vw;
 }
 

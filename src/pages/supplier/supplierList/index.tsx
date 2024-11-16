@@ -24,6 +24,8 @@ function SupplierList() {
     });
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [filterNome, setFilterNome] = useState<string>(''); // Filtro para nome
+    const [filterContato, setFilterContato] = useState<string>(''); // Filtro para contato
 
     const fetchSuppliers = async () => {
         try {
@@ -45,13 +47,17 @@ function SupplierList() {
         fetchSuppliers();
     }, []);
 
-    useEffect(() => {
-        console.log(suppliers);
-    }, [suppliers]);
-
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prevData => ({ ...prevData, [name]: value }));
+    };
+
+    const handleFilterNomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFilterNome(e.target.value);
+    };
+
+    const handleFilterContatoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFilterContato(e.target.value); 
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -79,13 +85,18 @@ function SupplierList() {
 
     const handleDelete = async (id: number) => {
         try {
-            // Corrigindo a URL para incluir a porta correta no axios.delete
             await axios.delete(`http://localhost:3000/api/suppliers/delete/${id}`);
             setSuppliers(prev => prev.filter(supplier => supplier.id !== id));
         } catch (error) {
             setError("Erro ao excluir fornecedor");
         }
     };
+
+
+    const filteredSuppliers = suppliers.filter((supplier) =>
+        supplier.nome.toLowerCase().includes(filterNome.toLowerCase()) &&
+        supplier.contato.toLowerCase().includes(filterContato.toLowerCase())
+    );
 
     return (
         <>
@@ -96,6 +107,28 @@ function SupplierList() {
                 <div id="supplier-cards">
                     <div id="box-h1">
                         <h1>Fornecedores</h1>
+                        <div className="filter-box">
+                            <Input
+                                color={1}
+                                labelColor={1}
+                                type="text"
+                                placeholder="Buscar por nome"
+                                label="Filtrar por Nome"
+                                name="filterNome"
+                                value={filterNome}
+                                onChange={handleFilterNomeChange}
+                            />
+                            <Input
+                                color={1}
+                                labelColor={1}
+                                type="text"
+                                placeholder="Buscar por contato"
+                                label="Filtrar por Contato"
+                                name="filterContato"
+                                value={filterContato}
+                                onChange={handleFilterContatoChange}
+                            />
+                        </div>
                     </div>
 
                     {error && <p className="error-message">{error}</p>}
@@ -105,8 +138,8 @@ function SupplierList() {
                     ) : (
                         <>
                             {
-                                suppliers.length > 0 ? (
-                                    suppliers.map((supplier) => (
+                                filteredSuppliers.length > 0 ? (
+                                    filteredSuppliers.map((supplier) => (
                                         <div key={supplier.id} className="supplier-card">
                                             <div id="info-supp-card">
                                                 <h3>{supplier.nome}</h3>
@@ -137,10 +170,9 @@ function SupplierList() {
                                         </div>
                                     ))
                                 ) : (
-                                    <p>Não há fornecedores cadastrados.</p>
+                                    <p>Não há fornecedores que correspondam à pesquisa.</p>
                                 )
                             }
-
                         </>
                     )}
                 </div>

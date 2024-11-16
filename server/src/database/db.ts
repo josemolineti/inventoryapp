@@ -78,6 +78,7 @@ const db = new sqlite3.Database('./server/src/database/database.db', (err) => {
                 console.error('Erro ao criar as tabelas:', err);
             } else {
                 console.log('Tabelas criadas com sucesso');
+                  
             }
         });
     }

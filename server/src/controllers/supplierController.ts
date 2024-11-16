@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import sqlite3 from 'sqlite3';
+import { updateSupplier } from '../service/supplierService';
 
 const db = new sqlite3.Database('./server/src/database/database.db');
 
@@ -31,22 +32,17 @@ export const registerSupplier = (req: Request, res: Response) => {
     });
 };
 
+export const updateSupplierController = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { nome, cnpj, contato, endereco } = req.body;
 
-
-
-export const addSupplier = (req: Request, res: Response) => {
-    const { name, email } = req.body;
-
-    const query = 'INSERT INTO fornecedor (name, email) VALUES (?, ?)';
-    db.run(query, [name, email], (err) => {
-        if (err) {
-            console.error('Erro ao adicionar fornecedor:', err);
-            return res.status(500).json({ error: 'Erro ao adicionar fornecedor' }); // Retorna a resposta e sai da função
-        }
-
-        // Aqui, não temos outro "res" depois dessa linha
-        return res.status(201).json({ message: 'Fornecedor adicionado com sucesso' });
-    });
+    try {
+        const updatedSupplier = await updateSupplier(id, nome, cnpj, contato, endereco);
+        res.status(200).json({ message: 'Fornecedor atualizado com sucesso', supplier: updatedSupplier });
+    } catch (error) {
+        console.error('Erro ao atualizar fornecedor:', error);
+        res.status(500).json({ error: 'Erro ao atualizar fornecedor' });
+    }
 };
 
 export const getAllSuppliers = (): Promise<any[]> => {
@@ -62,6 +58,8 @@ export const getAllSuppliers = (): Promise<any[]> => {
         });
     });
 };
+
+
 
 
 export const deleteSupplier = (id: string) => {
