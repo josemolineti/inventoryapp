@@ -1,52 +1,105 @@
 import Button from '@/components/ui/button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '@/styles/supplier_style.css';
 import TopBar from '@/components/ui/top-bar';
 import Input from '@/components/ui/input';
 import CardButtonFunction from '@/components/ui/card-button-func';
+import axios from 'axios';
 
 interface IProductProps {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    quantity: number;
-    image: string;
+    id: number;
+    nome: string;
+    descricao: string;
+    preco: number;
+    quantidade: number;
+    imagem: string;
+    fornecedorId: number;
 }
 
-function productList() {
-    const [idCounter, setIdCounter] = useState(1);
+function ProductList() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const [products, setProducts] = useState<IProductProps[]>([]);
     const [formData, setFormData] = useState<Omit<IProductProps, 'id'>>({
-        name: '',
-        description: '',
-        price: 0,
-        quantity: 0,
-        image: '',
+        nome: '',
+        descricao: '',
+        preco: 0,
+        quantidade: 0,
+        imagem: '',
+        fornecedorId: 0,
     });
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+    const fetchProducts = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await axios.get('http://localhost:3000/api/products');
+            if (Array.isArray(response.data)) {
+                setProducts(response.data);
+            } else {
+                setError('Formato inválido de dados do servidor.');
+            }
+        } catch (err) {
+            setError('Erro ao carregar produtos.');
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const newProduct = { id: idCounter.toString(), ...formData };
-        setProducts([...products, newProduct]);
-        setIdCounter(idCounter + 1);
+    useEffect(() => {
+        fetchProducts();
+    }, []); 
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+
         setFormData({
-            name: '',
-            description: '',
-            price: 0,
-            quantity: 0,
-            image: '',
+            ...formData,
+            [name]: name === 'preco' || name === 'quantidade' ? Number(value) : value,
         });
     };
 
-    const handleDelete = (id: string) => {
-        setProducts(products.filter(product => product.id !== id));
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+        console.log("ALOOO", formData);
+
+        try {
+            const response = await axios.post('http://localhost:3000/api/products/register', formData);
+            fetchProducts();
+
+            setFormData({
+                nome: '',
+                descricao: '',
+                preco: 0,
+                quantidade: 0,
+                imagem: '',
+                fornecedorId: 0,
+            });
+        } catch (err) {
+            setError('Erro ao criar produto. Verifique os dados.');
+        } finally {
+            setLoading(false);
+        }
     };
+
+    // Função para excluir um produto
+    const handleDelete = async (id: number) => {
+        try {
+            await axios.delete(`http://localhost:3000/api/products/delete/${id}`);
+            fetchProducts(); // Atualiza a lista após excluir o produto
+        } catch (error) {
+            console.error("Erro ao deletar produto:", error);
+        }
+    };
+
+    useEffect(() => {
+        document.body.classList.add('product-page');
+        return () => {
+            document.body.classList.remove('product-page');
+        };
+    }, []);
 
     return (
         <>
@@ -57,21 +110,52 @@ function productList() {
                     <div id="box-h1">
                         <h1>Produtos</h1>
                     </div>
-                    {products.map((product) => (
-                        <div key={product.id} className="supplier-card">
-                            <div id="info-supp-card">
-                                <h3>{product.name}</h3>
-                                <p>Descrição: {product.description}</p>
-                                <p>Preço: R$ {product.price}</p>
-                                <p>Quantidade: {product.quantity}</p>
-                            </div>
-                            <div id="div-button-functions">
-                                <CardButtonFunction type={1} objectId={product.id} onDelete={handleDelete} reference='produtos' />
-                                <CardButtonFunction type={2} objectId={product.id} onDelete={() => { }} reference='produtos' />
-                                <CardButtonFunction type={3} objectId={product.id} onDelete={handleDelete} reference='produtos' />
-                            </div>
-                        </div>
-                    ))}
+
+                    {loading && <p>Carregando...</p>}
+                    {error && <p className="error-message">{error}</p>}
+
+                    {products.length > 0 ? (
+                        products.map((product) => {
+                            if (!product || !product.nome) {
+                                return null; 
+                            }
+
+                            return (
+                                <div key={product.id} className="supplier-card">
+                                    <div id="info-supp-card">
+                                        <h3>{product.nome}</h3>
+                                        <p>Fornecedor: {product.fornecedorId}</p>
+                                        <p>Descrição: {product.descricao}</p>
+                                        <p>Preço: R$ {product.preco}</p>
+                                        <p>Quantidade: {product.quantidade}</p>
+                                    </div>
+                                    <div id="div-button-functions">
+                                        <CardButtonFunction
+                                            type={1}
+                                            objectId={Number(product.id)}
+                                            onDelete={handleDelete}
+                                            reference="produtos"
+                                        />
+                                        <CardButtonFunction
+                                            type={2}
+                                            objectId={Number(product.id)}
+                                            onDelete={handleDelete}
+                                            reference="produtos"
+                                        />
+                                        <CardButtonFunction
+                                            type={3}
+                                            objectId={Number(product.id)}
+                                            onDelete={handleDelete}
+                                            reference="produtos"
+                                        />
+                                    </div>
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <p>Nenhum produto cadastrado.</p>
+                    )}
+
                 </div>
 
                 <div id="info-box">
@@ -82,19 +166,34 @@ function productList() {
                             type="text"
                             placeholder="Nome do produto"
                             label="Nome"
-                            name="name"
-                            value={formData.name}
+                            name="nome"
+                            value={formData.nome}
                             onChange={handleInputChange}
                             required
                         />
+                        <div id="supplier-select">
+                            <label htmlFor="supplier">Fornecedor</label>
+                            <select
+                                className="product-page__input"
+                                name="fornecedorId"
+                                value={formData.fornecedorId}
+                                onChange={handleInputChange}
+                                required
+                            >
+                                <option value={0}>Selecione o fornecedor</option>
+                                <option value={9}>Fornecedor 1</option>
+                                <option value={2}>Fornecedor 2</option>
+                                <option value={3}>Fornecedor 3</option>
+                            </select>
+                        </div>
                         <Input
                             color={2}
                             labelColor={2}
-                            type="tel"
+                            type="text"
                             placeholder="Descrição do produto"
                             label="Descrição"
-                            name="description"
-                            value={formData.description}
+                            name="descricao"
+                            value={formData.descricao}
                             onChange={handleInputChange}
                             required
                         />
@@ -104,9 +203,21 @@ function productList() {
                             type="number"
                             placeholder="Preço do produto"
                             label="Preço"
-                            name="price"
+                            name="preco"
                             min={0}
-                            value={formData.price}
+                            value={formData.preco}
+                            onChange={handleInputChange}
+                            required
+                        />
+                        <Input
+                            color={2}
+                            labelColor={2}
+                            type="number"
+                            placeholder="Quantidade do produto"
+                            label="Quantidade"
+                            name="quantidade"
+                            min={0}
+                            value={formData.quantidade}
                             onChange={handleInputChange}
                             required
                         />
@@ -114,20 +225,18 @@ function productList() {
                             color={2}
                             labelColor={2}
                             type="text"
-                            placeholder="Quantidade do produto"
-                            label="Quantidade"
-                            name="quantity"
-                            min={0}
-                            value={formData.quantity}
+                            placeholder="URL da imagem do produto"
+                            label="Imagem"
+                            name="imagem"
+                            value={formData.imagem}
                             onChange={handleInputChange}
-                            required
                         />
                         <Button color={1} text="Criar Produto" type="submit" />
                     </form>
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export default productList;
+export default ProductList;

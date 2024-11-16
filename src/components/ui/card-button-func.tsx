@@ -2,6 +2,7 @@ import EditIcon from '@/assets/edit-button-icon.svg';
 import ViewIcon from '@/assets/view-button-icon.svg';
 import DeleteIcon from '@/assets/delete-button-icon.svg';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 interface ICardButtonFunctionProps {
     type: 1 | 2 | 3;
@@ -11,6 +12,7 @@ interface ICardButtonFunctionProps {
 }
 
 function CardButtonFunction({ type, objectId, reference, onDelete }: ICardButtonFunctionProps): JSX.Element {
+    const { user } = useAuth();
     const navigate = useNavigate();
     const selectType = () => {
         if (type === 1) {
@@ -23,14 +25,16 @@ function CardButtonFunction({ type, objectId, reference, onDelete }: ICardButton
     };
 
     const handleClick = () => {
-        if (type === 1) {
-            alert(`Editando o ${objectId}`);
-            navigate(`/${reference}/editar?objectId=${objectId}`);
-        } else if (type === 2) {
-            alert(`Olhando o ${objectId}`);
-        } else if (type === 3) {
-            alert(`Deletando o ${objectId}`)
-            onDelete(objectId);
+        if (user?.isAdmin == 1) {
+            if (type === 1) {
+                navigate(`/${reference}/editar?objectId=${objectId}`);
+            } else if (type === 2) {
+    
+            } else if (type === 3) {
+                onDelete(objectId);
+            }
+        } else {
+            alert("Você não tem permissão para fazer isso!")
         }
     };
 

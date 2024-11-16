@@ -1,79 +1,102 @@
-import { useState, useEffect } from 'react';
+import { useEffect,  useState } from 'react';
 import TopBar from "@/components/ui/top-bar";
 import '@/styles/supplier_style.css';
 import Input from '@/components/ui/input';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Button from '@/components/ui/button';
+import axios from 'axios';
+
+interface ISupplierProps {
+    id: number;
+    nome: string;
+    cnpj: string;
+    contato: string;
+    endereco: string;
+}
 
 function SupplierEdit() {
     const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const objectId = queryParams.get('objectId');
+    const searchParams = new URLSearchParams(location.search);
+    const objectIdFromUrl = searchParams.get('objectId');
+    
+    const navigate = useNavigate();
+    const objectId = objectIdFromUrl || sessionStorage.getItem('objectId') || '';
+    
+    useEffect(() => {
+        if (objectIdFromUrl) {
+            sessionStorage.setItem('objectId', objectIdFromUrl);
+        }
+    }, [objectIdFromUrl]);
 
-    const [supplier, setSupplier] = useState<any>(null);
+    const [formData, setFormData] = useState<Omit<ISupplierProps, 'id'>>({
+        nome: '',
+        contato: '',
+        cnpj: '',
+        endereco: ''
+    });
+
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchSupplierId = async (id: string) => {
+        try {
+            setLoading(true);
+            const response = await axios.get(`http://localhost:3000/api/suppliers/${id}`);
+            if (response.data) {
+                setFormData({
+                    nome: response.data.nome,
+                    cnpj: response.data.cnpj,
+                    contato: response.data.contato,
+                    endereco: response.data.endereco
+                });
+            } else {
+                setError('Fornecedor não encontrado');
+            }
+        } catch (err) {
+            console.error('Erro ao carregar fornecedor:', err);
+            setError('Erro ao carregar fornecedor');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        if (objectId) {
+            fetchSupplierId(objectId);
+        } else {
+            setError("ID do fornecedor não encontrado.");
+        }
+    }, [objectId]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async () => {
+        setError(null);
+        try {
+            const response = await axios.put(`http://localhost:3000/api/suppliers/${objectId}`, formData);
+            if (response.status === 200) {
+                navigate('/fornecedores');
+            } else {
+                setError('Erro ao atualizar fornecedor');
+            }
+        } catch (err) {
+            console.error("Erro ao atualizar fornecedor:", err);
+            setError('Erro ao atualizar fornecedor');
+        }
+    };
 
     useEffect(() => {
         document.body.classList.add('supplier-edit');
-
-        if (objectId) {
-            fetchSupplierData(objectId);
-        } else {
-            console.error("ID de fornecedor inválido.");
-        }
-
         return () => {
             document.body.classList.remove('supplier-edit');
         };
-    }, [objectId]);
-
-    const fetchSupplierData = async (id: string) => {
-        try {
-            const response = await fetch(`/api/supplier/${id}`);
-
-            // Verificar o status da resposta
-            if (!response.ok) {
-                throw new Error(`Erro na requisição: ${response.statusText}`);
-            }
-
-            const textResponse = await response.text(); // Obtenha o texto da resposta
-            console.log('Resposta da API:', textResponse); // Verifique o que o servidor está respondendo
-
-            // Se for um JSON válido, então faça o parse
-            try {
-                const data = JSON.parse(textResponse);
-                setSupplier(data);
-            } catch (e) {
-                console.error('Erro ao analisar JSON:', e);
-            }
-        } catch (error) {
-            console.error('Erro ao buscar fornecedor:', error);
-        }
-    };
-
-
-
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (!supplier) return;
-
-        try {
-            const response = await fetch(`/api/supplier/${supplier.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(supplier),
-            });
-            const data = await response.json();
-            console.log("Fornecedor atualizado:", data);
-        } catch (error) {
-            console.error('Erro ao atualizar fornecedor:', error);
-        }
-    };
-
-    if (!supplier) return <div>Carregando...</div>;
+    }, []);
 
     return (
         <>
@@ -82,43 +105,53 @@ function SupplierEdit() {
             </header>
             <div id="main-box">
                 <div id="form-box">
-                    <form onSubmit={handleSubmit}>
+                    <form>
                         <h1>Editar fornecedor {objectId}</h1>
                         <Input
                             color={1}
                             labelColor={1}
-                            placeholder="Digite o nome"
-                            type="text"
-                            label="Nome"
-                            name="name"
-                            value={supplier.nome}
-                            onChange={(e) => setSupplier({ ...supplier, nome: e.target.value })}
+                            placeholder='Digite o nome'
+                            type='text'
+                            label='Nome'
+                            name='nome'
+                            value={formData.nome}
+                            onChange={handleChange}
                         />
                         <Input
                             color={1}
                             labelColor={1}
-                            placeholder="Digite o telefone"
-                            type="tel"
-                            label="Telefone"
-                            name="tel"
-                            value={supplier.contato}
-                            onChange={(e) => setSupplier({ ...supplier, contato: e.target.value })}
+                            placeholder='Digite o telefone'
+                            type='tel'
+                            label='Telefone'
+                            name='contato'
+                            value={formData.contato}
+                            onChange={handleChange}
                         />
                         <Input
                             color={1}
                             labelColor={1}
-                            placeholder="Digite o endereço"
-                            type="text"
-                            label="Endereço"
-                            name="address"
-                            value={supplier.endereco}
-                            onChange={(e) => setSupplier({ ...supplier, endereco: e.target.value })}
+                            placeholder='Digite o endereco'
+                            type='text'
+                            label='Endereco'
+                            name='endereco'
+                            value={formData.endereco}
+                            onChange={handleChange}
                         />
-                        <Button color={3} type="back" text="Cancelar" />
-                        <Button color={1} type="submit" text="Salvar" />
                     </form>
                 </div>
-                <div id="info-box"></div>
+
+                <div id="info-box">
+                    <Button color={3} type='back' text='Cancelar' onClick={() => navigate('/fornecedores')} />
+                    <Button
+                        color={1}
+                        type='button'
+                        text='Salvar'
+                        onClick={handleSubmit} 
+                    />
+                </div>
+
+                {loading && <p>Carregando...</p>}
+                {error && <p>{error}</p>}
             </div>
         </>
     );
