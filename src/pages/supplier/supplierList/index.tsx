@@ -24,8 +24,8 @@ function SupplierList() {
     });
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [filterNome, setFilterNome] = useState<string>(''); // Filtro para nome
-    const [filterContato, setFilterContato] = useState<string>(''); // Filtro para contato
+    const [filterNome, setFilterNome] = useState<string>(''); 
+    const [filterContato, setFilterContato] = useState<string>('');
 
     const fetchSuppliers = async () => {
         try {
@@ -155,12 +155,6 @@ function SupplierList() {
                                                     reference="fornecedores"
                                                 />
                                                 <CardButtonFunction
-                                                    type={2}
-                                                    objectId={supplier.id}
-                                                    onDelete={() => { }}
-                                                    reference="fornecedores"
-                                                />
-                                                <CardButtonFunction
                                                     type={3}
                                                     objectId={supplier.id}
                                                     onDelete={handleDelete}
@@ -170,7 +164,7 @@ function SupplierList() {
                                         </div>
                                     ))
                                 ) : (
-                                    <p>Não há fornecedores que correspondam à pesquisa.</p>
+                                    <p>Não ha fornecedores para esses filtros</p>
                                 )
                             }
                         </>

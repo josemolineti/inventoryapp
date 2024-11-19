@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import sqlite3 from 'sqlite3';
-import { updateSupplier } from '../service/supplierService';
 
 const db = new sqlite3.Database('./server/src/database/database.db');
 

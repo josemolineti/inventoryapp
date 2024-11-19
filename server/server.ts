@@ -4,6 +4,7 @@ import supplierRoutes from './src/routes/supplierRoutes';
 import customerRoutes from './src/routes/customerRoutes';
 import productRoutes from './src/routes/productRoutes';
 import orderRoutes from './src/routes/orderRoutes';
+import orderItemRoutes from './src/routes/orderItemRoutes';
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -31,6 +32,7 @@ app.use('/api/suppliers', supplierRoutes);
 app.use('/api/customers', customerRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/orderItem', orderItemRoutes);
 
 
 app.get('/', (req: Request, res: Response) => {
