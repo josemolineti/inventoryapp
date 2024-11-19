@@ -361,7 +361,7 @@ CARD BUTTON FUNCTIONS
 
 
 
-  .product-page select {
+  select {
     border-radius: 10px;
     font-size: 14pt;
     font-weight: bold;
@@ -375,31 +375,31 @@ CARD BUTTON FUNCTIONS
 
   }
 
-  .product-page select:focus {
+  select:focus {
     border-color: #285A8E;
 
-    .product-page select option {
+    select option {
       font-size: 14pt;
       font-weight: normal;
       color: #16325B;
       background-color: white;
     }
 
-    .product-page select option:checked {
+    select option:checked {
       background-color: #285A8E;
       color: white;
     }
 
-    .product-page select:focus-visible {
+    select:focus-visible {
       color: #16325B;
     }
 
-    .product-page select:hover {
+    select:hover {
       color: #16325B;
       background-color: #f0f0f0;
     }
 
-    .product-page select+.custom-select-arrow {
+    select+.custom-select-arrow {
       position: absolute;
       top: 50%;
       right: 10px;

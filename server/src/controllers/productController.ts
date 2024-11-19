@@ -7,13 +7,13 @@ const db = new sqlite3.Database('./server/src/database/database.db');
 export const registerProduct = (req: Request, res: Response) => {
     const { nome, descricao, preco, quantidade, imagem, fornecedorId } = req.body;
 
-    if (!nome  || !descricao || !preco || !quantidade || !imagem || !fornecedorId) {
+    if (!nome || !descricao || !preco || !quantidade || !imagem || !fornecedorId) {
         return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
     }
 
     const query = `INSERT INTO produto (nome, descricao, preco, quantidade, imagem, fornecedorId) VALUES (?, ?, ?, ?, ?, ?)`;
 
-    db.run(query, [nome,  descricao, preco, quantidade, imagem, fornecedorId], function (err) {
+    db.run(query, [nome, descricao, preco, quantidade, imagem, fornecedorId], function (err) {
         if (err) {
             console.error("Erro ao registrar produto:", err);
             res.status(500).json({ message: 'Erro ao registrar produto', error: err.message });
@@ -22,7 +22,7 @@ export const registerProduct = (req: Request, res: Response) => {
                 message: 'Produto registrado com sucesso',
                 supplier: {
                     id: this.lastID,
-                    nome,  descricao, preco, quantidade, imagem, fornecedorId,
+                    nome, descricao, preco, quantidade, imagem, fornecedorId,
                 },
             });
         }
@@ -51,6 +51,20 @@ export const deleteProduct = (id: string) => {
                 return reject(err);
             }
             resolve();
+        });
+    });
+};
+
+export const getAllSuppliersToSelect = (): Promise<any[]> => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT id, nome FROM fornecedor';
+        db.all(query, [], (err, rows) => {
+            if (err) {
+                console.error("Erro ao buscar fornecedores:", err);
+                return reject(err);
+            }
+            console.log("Fornecedores carregados:", rows);
+            resolve(rows); 
         });
     });
 };

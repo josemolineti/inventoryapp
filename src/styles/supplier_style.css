@@ -162,7 +162,7 @@ produtoo
 
 .product-page form input, select {
     margin-bottom: -1vw; 
-    box-sizing: border-box; /* Para garantir que o padding seja contido dentro do input */
+    box-sizing: border-box;
 }
 
 .product-page form button {
@@ -184,5 +184,12 @@ produtoo
     display: flex;
     flex-direction: column;
     margin-top: 2vw;
+    
 }
 
+
+.product-edit #supplier-select {
+    width: 50%;
+    margin-left: 18vw;
+    text-align: left;
+}

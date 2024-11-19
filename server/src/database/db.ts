@@ -36,7 +36,7 @@ const db = new sqlite3.Database('./server/src/database/database.db', (err) => {
 
           CREATE TABLE IF NOT EXISTS pedido (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            data TEXT NOT NULL,
+            data DATETIME NOT NULL,
             clienteId INTEGER,
             status TEXT NOT NULL,
             total REAL NOT NULL,

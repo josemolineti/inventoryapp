@@ -1,114 +1,226 @@
 import Button from '@/components/ui/button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '@/styles/supplier_style.css';
 import TopBar from '@/components/ui/top-bar';
 import Input from '@/components/ui/input';
 import CardButtonFunction from '@/components/ui/card-button-func';
+import axios from 'axios';
 
 interface IOrderProps {
-    id: string;
-    product: string;
-    supplier: string;
-    quantity: number;
+    id: number;
+    data: Date;
+    clienteId: number;
+    status: string;
+    total: 0;
 }
 
-function orderList() {
-    const [idCounter, setIdCounter] = useState(1);
+interface IClientProps {
+    id: number;
+    nome: string;
+}
+
+function OrderList() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const [orders, setOrders] = useState<IOrderProps[]>([]);
+    const [clients, setClients] = useState<IClientProps[]>([]);
     const [formData, setFormData] = useState<Omit<IOrderProps, 'id'>>({
-        product: '',
-        supplier: '',
-        quantity: 0,
+        data: new Date(),
+        clienteId: 0,
+        status: 'Pendente',
+        total: 0
     });
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+    const fetchOrders = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response = await axios.get('http://localhost:3000/api/orders');
+            if (Array.isArray(response.data)) {
+                setOrders(response.data);
+            } else {
+                setError('Formato inválido de dados do servidor.');
+            }
+        } catch (err) {
+            setError('Erro ao carregar os pedidos');
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const fetchClientsSelect = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/api/customers');
+            if (Array.isArray(response.data)) {
+                setClients(response.data);
+            } else {
+                console.error('Formato inválido de dados do servidor.');
+            }
+        } catch (err) {
+            console.error('Erro ao buscar clientes:', err);
+        }
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const newProduct = { id: idCounter.toString(), ...formData };
-        setOrders([...orders, newProduct]);
-        setIdCounter(idCounter + 1);
+    useEffect(() => {
+        fetchClientsSelect();
+        fetchOrders();
+    }, []);
+
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
+        const { name, value } = e.target;
         setFormData({
-            product: '',
-            supplier: '',
-            quantity: 0,
+            ...formData,
+            [name]: name === 'clienteId' ? Number(value) : new Date(value),
         });
     };
 
-    const handleDelete = (id: string) => {
-        setOrders(orders.filter(order => order.id !== id));
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+        console.log("Dados enviados:", typeof formData.data);
+
+        try {
+            const response = await axios.post('http://localhost:3000/api/orders/register', formData);
+            fetchOrders();
+            setFormData({
+                data: new Date(),
+                clienteId: 0,
+                status: 'Pendente',
+                total: 0
+            });
+            
+        } catch (err) {
+            setError('Erro ao criar produto Verifique os dados');
+        } finally {
+            setLoading(false);
+        }
     };
+
+    const handleDelete = async (id: number) => {
+        try {
+            await axios.delete(`http://localhost:3000/api/orders/delete/${id}`);
+            fetchOrders();
+        } catch (error) {
+            console.error("Erro ao deletar pedido:", error);
+        }
+    };
+
 
     return (
         <>
-            <header><TopBar /></header>
+            <header>
+                <TopBar />
+            </header>
 
             <div id="main-box">
                 <div id="supplier-cards">
                     <div id="box-h1">
                         <h1>Pedidos</h1>
                     </div>
-                    {orders.map((order) => (
-                        <div key={order.id} className="supplier-card">
-                            <div id="info-supp-card">
-                                <h3>{order.supplier}</h3>
-                                <p>Descrição: {order.product}</p>
-                                <p>Preço: R$ {order.quantity}</p>
-                            </div>
-                            <div id="div-button-functions">
-                                <CardButtonFunction type={1} objectId={order.id} onDelete={handleDelete} reference='pedidos' />
-                                <CardButtonFunction type={2} objectId={order.id} onDelete={() => { }} reference='pedidos' />
-                                <CardButtonFunction type={3} objectId={order.id} onDelete={handleDelete} reference='pedidos' />
-                            </div>
-                        </div>
-                    ))}
+
+                    {loading && <p>Carregando...</p>}
+                    {error && <p className="error-message">{error}</p>}
+
+                    {loading && <p>Carregando pedidos...</p>}
+                    {error && <p className="error-message">{error}</p>}
+
+                    {orders.length > 0 ? (
+                        orders.map((order) => {
+                            if (!order) {
+                                return null;
+                            }
+
+                            const client = clients.find((client) => client.id === order.clienteId);
+
+                            return (
+                                <div key={order.id} className="supplier-card">
+                                    <div id="info-supp-card">
+                                        <h3>Cliente: {client ? client.nome : 'Desconhecido'}</h3>
+                                        <p>
+                                            Data:{' '}
+                                            {new Date(order.data).toLocaleDateString('pt-BR', {
+                                                year: 'numeric',
+                                                month: 'long',
+                                                day: 'numeric',
+                                            })}
+                                        </p>
+                                        <p>Status: {order.status}</p>
+                                        <p>Total: R$ {order.total}</p>
+                                    </div>
+                                    <div id="div-button-functions">
+                                        <CardButtonFunction
+                                            type={1}
+                                            objectId={order.id}
+                                            onDelete={handleDelete}
+                                            reference="pedidos"
+                                        />
+                                        <CardButtonFunction
+                                            type={2}
+                                            objectId={order.id}
+                                            onDelete={handleDelete}
+                                            view={true}
+                                            reference="pedidos"
+                                        />
+                                        <CardButtonFunction
+                                            type={3}
+                                            objectId={order.id}
+                                            onDelete={handleDelete}
+                                            reference="pedidos"
+                                        />
+                                    </div>
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <p>Nenhum pedido cadastrado.</p>
+                    )}
+
                 </div>
 
                 <div id="info-box">
                     <form onSubmit={handleSubmit}>
+
                         <Input
                             color={2}
                             labelColor={2}
-                            type="text"
-                            placeholder="Selecione o fornecedor"
-                            label="Fornecedor"
-                            name="name"
-                            value={formData.supplier}
+                            type="date"
+                            placeholder="Selecione a data"
+                            label="Data"
+                            name="data"
+                            value={formData.data.toISOString().split('T')[0]}
                             onChange={handleInputChange}
                             required
                         />
-                        <Input
-                            color={2}
-                            labelColor={2}
-                            type="tel"
-                            placeholder="Selecione o produto"
-                            label="Produto"
-                            name="description"
-                            value={formData.product}
-                            onChange={handleInputChange}
-                            required
-                        />
-                        <Input
-                            color={2}
-                            labelColor={2}
-                            type="number"
-                            placeholder="Digite a quantidade"
-                            label="Quantidade"
-                            name="price"
-                            min={0}
-                            value={formData.quantity}
-                            onChange={handleInputChange}
-                            required
-                        />
+
+                        <div id="supplier-select">
+                            <label htmlFor="supplier">Cliente</label>
+                            <select
+                                className="product-page__input"
+                                name="clienteId"
+                                value={formData.clienteId}
+                                onChange={handleInputChange}
+                                required
+                            >
+                                <option value={0}>Selecione o cliente</option>
+                                {clients.map((client) => (
+                                    <option key={client.id} value={client.id}>
+                                        {client.nome}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+
                         <Button color={1} text="Criar Pedido" type="submit" />
                     </form>
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export default orderList;
+export default OrderList;

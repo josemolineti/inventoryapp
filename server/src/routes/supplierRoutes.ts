@@ -14,7 +14,7 @@ router.post('/register', async (req: Request, res: Response) => {
 });
 
 router.get('/', async (req: Request, res: Response) => {
-    console.log("Chamando getAllSuppliers");
+    
     try {
         const suppliers = await getAllSuppliers();
         res.json(suppliers);
