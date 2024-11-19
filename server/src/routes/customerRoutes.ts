@@ -4,7 +4,6 @@ import { getCustomerById, updateCustomer } from '../service/customerService';
 
 const router = express.Router();
 
-// Rota para registrar cliente
 router.post('/register', async (req: Request, res: Response) => {
     try {
         await registerCustomer(req, res);
@@ -14,7 +13,6 @@ router.post('/register', async (req: Request, res: Response) => {
     }
 });
 
-// Rota para listar todos os clientes
 router.get('/', async (req: Request, res: Response) => {
     console.log("Chamando getAllCustomers");
     try {
@@ -26,7 +24,6 @@ router.get('/', async (req: Request, res: Response) => {
     }
 });
 
-// Rota para buscar cliente por ID
 router.get('/:id', async (req: Request, res: Response) => {
     const id = req.params.id;
     try {
@@ -42,7 +39,6 @@ router.get('/:id', async (req: Request, res: Response) => {
     }
 });
 
-// Rota para atualizar cliente
 router.put('/:id', async (req: Request, res: Response) => {
     const { id } = req.params;
     const { nome, contato, cpf_cnpj, endereco } = req.body;
@@ -65,7 +61,6 @@ router.put('/:id', async (req: Request, res: Response) => {
     }
 });
 
-// Rota para excluir cliente
 router.delete('/delete/:id', async (req: Request, res: Response) => {
     try {
         const id = req.params.id;

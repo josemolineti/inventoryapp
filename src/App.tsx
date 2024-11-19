@@ -9,6 +9,7 @@ import ProductRoutes from './router/productRouter';
 import Reports from './pages/reports';
 import { AuthProvider } from './context/AuthContext';
 import { SupplierProvider } from './context/ISupplierContext';
+import OrderRouter from './router/ordersRouter';
 
 function App() {
 
@@ -29,11 +30,10 @@ function App() {
               {/*aqui embaixo eu fiz a rota principal dos fornecedores, que vai pro controlador onde vai redirecionar pras subrotas no arquivo FornecedorRoutes */}
               {/*fazer essa mesms estrutura pras outras paginas */}
               <Route path='/fornecedores/*' element={<FornecedorRoutes />} />
-              <Route path='/pedidos' />
+              <Route path='/pedidos/*' element={<OrderRouter/>}/>
               <Route path='/clientes/*' element={<CustomerRoutes />} />
               <Route path='/produtos/*' element={<ProductRoutes />} />
               <Route path='/relatorios' element={<Reports />} />
-              <Route path='/pedidos' />
               <Route path='/transacoes' />
               <Route path='/users' />
 

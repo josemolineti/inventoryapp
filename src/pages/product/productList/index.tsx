@@ -16,10 +16,19 @@ interface IProductProps {
     fornecedorId: number;
 }
 
+interface ISupplierProps {
+    id: number;
+    nome: string;
+    cnpj: string;
+    contato: string;
+    endereco: string;
+}
+
 function ProductList() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [products, setProducts] = useState<IProductProps[]>([]);
+    const [suppliers, setSuppliers] = useState<ISupplierProps[]>([]);
     const [formData, setFormData] = useState<Omit<IProductProps, 'id'>>({
         nome: '',
         descricao: '',
@@ -28,6 +37,9 @@ function ProductList() {
         imagem: '',
         fornecedorId: 0,
     });
+    
+    const [filterNome, setFilterNome] = useState('');
+    const [filterSupplier, setFilterSupplier] = useState('');
 
     const fetchProducts = async () => {
         setLoading(true);
@@ -46,9 +58,28 @@ function ProductList() {
         }
     };
 
+    const getIdSuppliers = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await axios.get('http://localhost:3000/api/suppliers');
+            if (Array.isArray(response.data)) {
+                setSuppliers(response.data);
+            } else {
+                setError('Formato inválido de dados do servidor.');
+            }
+        } catch (err) {
+            console.error("Erro de requisição:", err);
+            setError('Erro ao carregar fornecedores.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
+        getIdSuppliers();
         fetchProducts();
-    }, []); 
+    }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -63,12 +94,10 @@ function ProductList() {
         e.preventDefault();
         setLoading(true);
         setError(null);
-        console.log("ALOOO", formData);
 
         try {
             const response = await axios.post('http://localhost:3000/api/products/register', formData);
             fetchProducts();
-
             setFormData({
                 nome: '',
                 descricao: '',
@@ -84,14 +113,21 @@ function ProductList() {
         }
     };
 
-    // Função para excluir um produto
     const handleDelete = async (id: number) => {
         try {
             await axios.delete(`http://localhost:3000/api/products/delete/${id}`);
-            fetchProducts(); // Atualiza a lista após excluir o produto
+            fetchProducts();
         } catch (error) {
             console.error("Erro ao deletar produto:", error);
         }
+    };
+
+    const handleFilterNomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFilterNome(e.target.value);
+    };
+
+    const handleFilterSupplierChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFilterSupplier(e.target.value);
     };
 
     useEffect(() => {
@@ -101,6 +137,13 @@ function ProductList() {
         };
     }, []);
 
+    const filteredProducts = products.filter(product => {
+        const supplier = suppliers.find(sup => sup.id === product.fornecedorId);
+        const matchesNome = product.nome.toLowerCase().includes(filterNome.toLowerCase());
+        const matchesSupplier = supplier ? supplier.nome.toLowerCase().includes(filterSupplier.toLowerCase()) : false;
+        return matchesNome && matchesSupplier;
+    });
+
     return (
         <>
             <header><TopBar /></header>
@@ -109,22 +152,46 @@ function ProductList() {
                 <div id="supplier-cards">
                     <div id="box-h1">
                         <h1>Produtos</h1>
+                        <div className="filter-box">
+                            <Input
+                                color={1}
+                                labelColor={1}
+                                type="text"
+                                placeholder="Buscar por nome"
+                                label="Filtrar por Nome"
+                                name="filterNome"
+                                value={filterNome}
+                                onChange={handleFilterNomeChange}
+                            />
+                            <Input
+                                color={1}
+                                labelColor={1}
+                                type="text"
+                                placeholder="Buscar por fornecedor"
+                                label="Filtrar por Fornecedor"
+                                name="filterSupplier"
+                                value={filterSupplier}
+                                onChange={handleFilterSupplierChange}
+                            />
+                        </div>
                     </div>
 
                     {loading && <p>Carregando...</p>}
                     {error && <p className="error-message">{error}</p>}
 
-                    {products.length > 0 ? (
-                        products.map((product) => {
+                    {filteredProducts.length > 0 ? (
+                        filteredProducts.map((product) => {
                             if (!product || !product.nome) {
-                                return null; 
+                                return null;
                             }
+
+                            const supplier = suppliers.find(sup => sup.id === product.fornecedorId);
 
                             return (
                                 <div key={product.id} className="supplier-card">
                                     <div id="info-supp-card">
                                         <h3>{product.nome}</h3>
-                                        <p>Fornecedor: {product.fornecedorId}</p>
+                                        <p>Fornecedor: {supplier ? supplier.nome : 'Desconhecido'}</p>
                                         <p>Descrição: {product.descricao}</p>
                                         <p>Preço: R$ {product.preco}</p>
                                         <p>Quantidade: {product.quantidade}</p>
@@ -155,7 +222,6 @@ function ProductList() {
                     ) : (
                         <p>Nenhum produto cadastrado.</p>
                     )}
-
                 </div>
 
                 <div id="info-box">
@@ -181,9 +247,11 @@ function ProductList() {
                                 required
                             >
                                 <option value={0}>Selecione o fornecedor</option>
-                                <option value={9}>Fornecedor 1</option>
-                                <option value={2}>Fornecedor 2</option>
-                                <option value={3}>Fornecedor 3</option>
+                                {suppliers.map((supplier) => (
+                                    <option key={supplier.id} value={supplier.id}>
+                                        {supplier.nome}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                         <Input

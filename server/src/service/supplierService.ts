@@ -1,6 +1,4 @@
 import db from '../database/db';
-import { Request, Response } from 'express';
-
 
 export const findSupplierByCnpj = async (cnpj: string) => {
   return new Promise<any>((resolve, reject) => {

@@ -47,6 +47,9 @@ function TopBar(): JSX.Element {
                         <a href="/relatorios">Relatórios</a>
                     </li>
                     <li>
+                        <a href="/pedidos">Pedidos</a>
+                    </li>
+                    <li>
                         {user && <li><p>Bem-vindo, {user.nome}</p></li>}
                         <a href="/login" onClick={logout}>Sair</a>
                     </li>

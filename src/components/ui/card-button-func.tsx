@@ -8,10 +8,12 @@ interface ICardButtonFunctionProps {
     type: 1 | 2 | 3;
     objectId: number;
     reference: "fornecedores" | "clientes" | "produtos" | "pedidos";
+    onClick? : void
     onDelete: (id: number) => void;
+    view?: boolean;
 }
 
-function CardButtonFunction({ type, objectId, reference, onDelete }: ICardButtonFunctionProps): JSX.Element {
+function CardButtonFunction({ type, objectId, reference, onDelete, view }: ICardButtonFunctionProps): JSX.Element {
     const { user } = useAuth();
     const navigate = useNavigate();
     const selectType = () => {
@@ -29,6 +31,9 @@ function CardButtonFunction({ type, objectId, reference, onDelete }: ICardButton
             if (type === 1) {
                 navigate(`/${reference}/editar?objectId=${objectId}`);
             } else if (type === 2) {
+                if(view) {
+                    navigate(`/${reference}/visualizar?objectId=${objectId}`);
+                }
     
             } else if (type === 3) {
                 onDelete(objectId);
