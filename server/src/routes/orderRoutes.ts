@@ -4,7 +4,6 @@ import { getOrderById, updateOrder } from '../service/orderService';
 
 const router = express.Router();
 
-// Usar funções assíncronas corretamente dentro das rotas
 router.post('/register', async (req: Request, res: Response) => {
     try {
         await registerOrder(req, res);
@@ -45,7 +44,6 @@ router.put('/:id', async (req: Request, res: Response): Promise<void> => {
 
     console.log("Dados recebidos no backend: ", { data, clienteId, status, total });
 
-    // Verifique se todos os campos são obrigatórios e se total é maior que zero
     if (!data || !clienteId || !status || total <= 0) {
         console.log("Erro no backend: Todos os campos são obrigatórios e total deve ser maior que zero.");
         res.status(400).json({ message: 'Todos os campos são obrigatórios e total deve ser maior que zero.' });

@@ -11,7 +11,7 @@ interface IOrderProps {
     data: Date;
     clienteId: number;
     status: string;
-    total: 0;
+    total: number;
 }
 
 interface IClientProps {
@@ -30,6 +30,10 @@ function OrderList() {
         status: 'Pendente',
         total: 0
     });
+    const [filterDataStart, setFilterDataStart] = useState<string>('');
+    const [filterDataEnd, setFilterDataEnd] = useState<string>('');
+    const [filterCustomer, setFilterCustomer] = useState<string>('');
+    const [filteredOrders, setFilteredOrders] = useState<IOrderProps[]>([]);
 
     const fetchOrders = async () => {
         setLoading(true);
@@ -67,6 +71,21 @@ function OrderList() {
         fetchOrders();
     }, []);
 
+    useEffect(() => {
+        const filtered = orders.filter((order) => {
+            const client = clients.find((client) => client.id === order.clienteId);
+            const clientName = client ? client.nome : '';
+
+            return (
+                (filterCustomer === '' || clientName.toLowerCase().includes(filterCustomer.toLowerCase())) &&
+                (filterDataStart === '' || new Date(order.data) >= new Date(filterDataStart)) &&
+                (filterDataEnd === '' || new Date(order.data) <= new Date(filterDataEnd))
+            );
+        });
+
+        setFilteredOrders(filtered);
+    }, [filterDataStart, filterDataEnd, filterCustomer, orders, clients]);
+
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
@@ -81,7 +100,6 @@ function OrderList() {
         e.preventDefault();
         setLoading(true);
         setError(null);
-        console.log("Dados enviados:", typeof formData.data);
 
         try {
             const response = await axios.post('http://localhost:3000/api/orders/register', formData);
@@ -92,7 +110,7 @@ function OrderList() {
                 status: 'Pendente',
                 total: 0
             });
-            
+
         } catch (err) {
             setError('Erro ao criar produto Verifique os dados');
         } finally {
@@ -109,7 +127,6 @@ function OrderList() {
         }
     };
 
-
     return (
         <>
             <header>
@@ -121,15 +138,44 @@ function OrderList() {
                     <div id="box-h1">
                         <h1>Pedidos</h1>
                     </div>
+                    <div className="filter-box">
+                        <Input
+                            color={1}
+                            labelColor={1}
+                            type="date"
+                            placeholder="Buscar data inicial"
+                            label="Filtrar por data DE:"
+                            name="filterDataStart"
+                            value={filterDataStart}
+                            onChange={(e) => setFilterDataStart(e.target.value)}
+                        />
+                        <Input
+                            color={1}
+                            labelColor={1}
+                            type="date"
+                            placeholder="Buscar data final"
+                            label="Filtrar por data ATÉ:"
+                            name="filterDataEnd"
+                            value={filterDataEnd}
+                            onChange={(e) => setFilterDataEnd(e.target.value)}
+                        />
+                        <Input
+                            color={1}
+                            labelColor={1}
+                            type="text"
+                            placeholder="Buscar por cliente"
+                            label="Filtrar por Cliente"
+                            name="filterCustomer"
+                            value={filterCustomer}
+                            onChange={(e) => setFilterCustomer(e.target.value)}
+                        />
+                    </div>
 
                     {loading && <p>Carregando...</p>}
                     {error && <p className="error-message">{error}</p>}
 
-                    {loading && <p>Carregando pedidos...</p>}
-                    {error && <p className="error-message">{error}</p>}
-
-                    {orders.length > 0 ? (
-                        orders.map((order) => {
+                    {filteredOrders.length > 0 ? (
+                        filteredOrders.map((order) => {
                             if (!order) {
                                 return null;
                             }
@@ -176,9 +222,8 @@ function OrderList() {
                             );
                         })
                     ) : (
-                        <p>Nenhum pedido cadastrado.</p>
+                        <p>Nenhum pedido encontrado</p>
                     )}
-
                 </div>
 
                 <div id="info-box">
@@ -213,7 +258,6 @@ function OrderList() {
                                 ))}
                             </select>
                         </div>
-
 
                         <Button color={1} text="Criar Pedido" type="submit" />
                     </form>

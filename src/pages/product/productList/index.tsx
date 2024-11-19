@@ -204,12 +204,6 @@ function ProductList() {
                                             reference="produtos"
                                         />
                                         <CardButtonFunction
-                                            type={2}
-                                            objectId={Number(product.id)}
-                                            onDelete={handleDelete}
-                                            reference="produtos"
-                                        />
-                                        <CardButtonFunction
                                             type={3}
                                             objectId={Number(product.id)}
                                             onDelete={handleDelete}

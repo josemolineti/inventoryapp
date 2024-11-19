@@ -163,12 +163,7 @@ function CustomerList() {
                                                 onDelete={handleDelete}
                                                 reference="clientes"
                                             />
-                                            <CardButtonFunction
-                                                type={2}
-                                                objectId={customer.id}
-                                                onDelete={() => { }}
-                                                reference="clientes"
-                                            />
+                                    
                                             <CardButtonFunction
                                                 type={3}
                                                 objectId={customer.id}
